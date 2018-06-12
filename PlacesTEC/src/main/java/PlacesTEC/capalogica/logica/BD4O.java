@@ -5,7 +5,7 @@
  */
 package PlacesTEC.capalogica.logica;
 
-import Paquete.Estructuras.Lugar;
+import PlacesTEC.capalogica.Estructuras.Lugar;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;

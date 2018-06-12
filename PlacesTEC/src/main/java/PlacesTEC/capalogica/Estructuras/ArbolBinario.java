@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Paquete.Estructuras;
-
-import Paquete.Estructuras.ANodoArbol;
+package PlacesTEC.capalogica.Estructuras;
 
 /**
  *

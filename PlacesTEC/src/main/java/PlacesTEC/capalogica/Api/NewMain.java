@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PlacesTEC.capalogica.Gestion;
+package PlacesTEC.capalogica.Api;
 
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.model.GeocoderGeometry;

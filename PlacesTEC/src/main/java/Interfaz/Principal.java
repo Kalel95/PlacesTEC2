@@ -5,7 +5,7 @@
  */
 package Interfaz;
 
-import Paquete.Estructuras.Lugar;
+import PlacesTEC.capalogica.Estructuras.Lugar;
 import PlacesTEC.capalogica.logica.BD4O;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
