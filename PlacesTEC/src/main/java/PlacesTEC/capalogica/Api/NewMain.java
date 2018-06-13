@@ -30,7 +30,8 @@ public class NewMain {
         
         Geocoder d = new Geocoder();
         GoogleGeocoderService c = new GoogleGeocoderService(d);
-        System.out.println(c.locationToCoordinate("Alajuelita Central Park, San José Province, Alajuelita, Costa Rica"));
+        LatLng location = c.locationToCoordinate("Alajuelita Central Park, San José Province, Alajuelita, Costa Rica").getLocation();
+        System.out.println("La latitud es = " + location.getLat() + "\nLa longitud es = " + location.getLng());
         
         GeocoderGeometry h = new GeocoderGeometry();
         LatLng j = new LatLng("9.902809399999999", "-84.10016610000001");
