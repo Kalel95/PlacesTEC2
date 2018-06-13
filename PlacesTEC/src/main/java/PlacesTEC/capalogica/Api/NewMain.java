@@ -22,17 +22,18 @@ public class NewMain {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        NewClass a = new NewClass();
+        ApiPlaces a = new ApiPlaces();
+        //a.AutoCompletado("alajuelita");
         //a.imprimir();
         //ejemplaces b = new ejemplaces();
         //b.imp();
         
         Geocoder d = new Geocoder();
         GoogleGeocoderService c = new GoogleGeocoderService(d);
-        System.out.println(c.locationToCoordinate("Av. 1 del Comercio, Provincia de Cartago, Cartago, Costa Rica"));
+        System.out.println(c.locationToCoordinate("Alajuelita Central Park, San José Province, Alajuelita, Costa Rica"));
         
         GeocoderGeometry h = new GeocoderGeometry();
-        LatLng j = new LatLng("9.8658024", "-83.92228349999999");
+        LatLng j = new LatLng("9.902809399999999", "-84.10016610000001");
         h.setLocation(j);
         System.out.println(c.coordinateToLocation(h));
     }

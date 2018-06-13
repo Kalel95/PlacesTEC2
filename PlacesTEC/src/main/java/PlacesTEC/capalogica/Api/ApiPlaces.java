@@ -10,12 +10,13 @@ import java.util.List;
 import se.walkercrou.places.GooglePlaces;
 import se.walkercrou.places.Param;
 import se.walkercrou.places.Place;
+import se.walkercrou.places.Prediction;
 
 /**
  *
  * @author Kenneth
  */
-public class NewClass {
+public class ApiPlaces {
     GooglePlaces client = new GooglePlaces("AIzaSyAzamKw_Gz499mqnxp7LiBc8MNFijHHRI8");
     Param a = new Param("type=restaurant");
     //Param a = new Param("keyword=tacobell");
@@ -59,5 +60,15 @@ public class NewClass {
             System.out.println("Reviews: " + detailedEmpireStateBuilding.getReviews().size());
             System.out.println("Hours:\n " + detailedEmpireStateBuilding.getHours());
         //}*/
+    }
+    public void AutoCompletado(String direcACompletar) {
+        List<Prediction> predictions = client.getPlacePredictions(direcACompletar);
+        
+        System.out.println(predictions.size());
+        int num=predictions.size();
+        System.out.println(Arrays.deepToString(predictions.toArray()));
+        for(int i=0; i<num; i++) {
+            System.out.println(predictions.get(i));
+        }
     }
 }
