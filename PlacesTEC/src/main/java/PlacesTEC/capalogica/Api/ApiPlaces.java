@@ -64,9 +64,8 @@ public class ApiPlaces {
     public void AutoCompletado(String direcACompletar) {
         List<Prediction> predictions = client.getPlacePredictions(direcACompletar);
         
-        System.out.println(predictions.size());
+        
         int num=predictions.size();
-        System.out.println(Arrays.deepToString(predictions.toArray()));
         for(int i=0; i<num; i++) {
             System.out.println(predictions.get(i));
         }

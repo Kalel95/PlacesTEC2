@@ -5,9 +5,17 @@
  */
 package Interfaz;
 
+import PlacesTEC.capalogica.Api.GoogleGeocoderService;
 import PlacesTEC.capalogica.Estructuras.Lugar;
 import PlacesTEC.capalogica.logica.BD4O;
 import com.db4o.ObjectSet;
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.model.GeocoderGeometry;
+import com.google.code.geocoder.model.LatLng;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -166,19 +174,34 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //validar que los jtextfield no esten vacíos
-        if((jTextField1.getText() == null || jTextField1.getText().equals(""))||
-                (jTextField2.getText() == null || jTextField2.getText().equals(""))||
-                (jTextField3.getText() == null || jTextField3.getText().equals(""))||
-                (jTextField4.getText() == null || jTextField4.getText().equals(""))||
-                (jTextField5.getText() == null || jTextField5.getText().equals(""))||
-                (jTextField6.getText() == null || jTextField6.getText().equals(""))||
-                (jTextField7.getText() == null || jTextField7.getText().equals(""))||
-                (jTextField8.getText() == null || jTextField7.getText().equals(""))){
-            JOptionPane.showMessageDialog(null,"Debe completar los espacios vacios");
-        }
-        else{
-            JOptionPane.showMessageDialog(null,"Buscando");
+        Geocoder d = new Geocoder();
+            GoogleGeocoderService c = new GoogleGeocoderService(d);
+        try {
+            //validar que los jtextfield no esten vacíos
+          if((jTextField1.getText() == null || jTextField1.getText().equals(""))||
+         (jTextField2.getText() == null || jTextField2.getText().equals(""))){
+              
+              if((jTextField3.getText() == null || jTextField3.getText().equals(""))){
+                 JOptionPane.showMessageDialog(null,"Debe completar la latitud y longitud o la dirección "); 
+              }
+              else{
+                 LatLng location = c.locationToCoordinate(jTextField3.getText()).getLocation();
+                 System.out.println("La latitud es = " + location.getLat() + "\nLa longitud es = " + location.getLng());         
+                 JOptionPane.showMessageDialog(null,"La latitud es = " + location.getLat() + "\nLa longitud es = " + 
+                    location.getLng());
+              }
+           }
+           else if((jTextField3.getText() == null || jTextField3.getText().equals(""))){
+               if((jTextField1.getText()) != null ||(jTextField2.getText() == null )){
+            GeocoderGeometry h = new GeocoderGeometry();
+            LatLng j = new LatLng(jTextField1.getText(), jTextField2.getText());
+            h.setLocation(j);
+            System.out.println(c.coordinateToLocation(h));
+            JOptionPane.showMessageDialog(null,c.coordinateToLocation(h));
+               }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

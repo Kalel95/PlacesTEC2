@@ -26,7 +26,7 @@ public final class GoogleGeocoderService {
 
     private final Geocoder geocoder;
 
-    GoogleGeocoderService(Geocoder geocoder) {
+    public GoogleGeocoderService(Geocoder geocoder) {
         this.geocoder = geocoder;
     }
 

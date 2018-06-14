@@ -37,15 +37,15 @@ public class NewMain {
         //ejemplaces b = new ejemplaces();
         //b.imp();
         
-        /*Geocoder d = new Geocoder();
+        Geocoder d = new Geocoder();
         GoogleGeocoderService c = new GoogleGeocoderService(d);
-        LatLng location = c.locationToCoordinate("Alajuelita Central Park, San José Province, Alajuelita, Costa Rica").getLocation();
+        LatLng location = c.locationToCoordinate("Cot,Oreamuno, Cartago, Costa Rica").getLocation();
         System.out.println("La latitud es = " + location.getLat() + "\nLa longitud es = " + location.getLng());
         
         GeocoderGeometry h = new GeocoderGeometry();
-        LatLng j = new LatLng("9.902809399999999", "-84.10016610000001");
+        LatLng j = new LatLng("9.892196199999999", "-83.87248249999999");
         h.setLocation(j);
-        System.out.println(c.coordinateToLocation(h));*/
+        System.out.println(c.coordinateToLocation(h));
         
         
         
@@ -62,10 +62,10 @@ public class NewMain {
                     System.out.println(t.rows[i].elements[j].distance);
                 }
             }*/
-        String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};
+        /*String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};
         String[] b = {"San Jose Costa Rica","Cartago Province,Cartago,Costa Rica"};
         DistaciaMatrixApi l = new DistaciaMatrixApi();
-        l.impDistancia(a, b, "Carro");
+        l.impDistancia(a, b, "Carro");*/
     }
 }
     
