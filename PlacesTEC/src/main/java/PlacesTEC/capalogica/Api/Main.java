@@ -21,7 +21,9 @@ public class Main {
     static String sJson="";
    public static void main(String[] args)
     throws MalformedURLException, IOException {
-      URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670,151.1957&radius=500&types=food&name=cruise&key=AIzaSyAzamKw_Gz499mqnxp7LiBc8MNFijHHRI8");
+       String origen = "Cartago+Province,Cartago,Costa+Rica|San+Jose+Costa+Rica";
+       String destino = "San+Jose+Costa+Rica|Cartago+Province,Cartago,Costa+Rica";
+      URL url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins="+origen+"&destinations="+destino+"&key=AIzaSyAzamKw_Gz499mqnxp7LiBc8MNFijHHRI8");
       
       URLConnection con = url.openConnection();
  
@@ -35,8 +37,8 @@ public class Main {
       }
       JsonParser parser = new JsonParser();
       JsonObject gsonEle = (JsonObject) parser.parse(sJson);
-      JsonArray gsonArr=gsonEle.get("results").getAsJsonArray();
-      System.out.println(gsonEle.get("results").getAsJsonArray().get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("location").getAsJsonObject().get("lat"));
+      //JsonArray gsonArr=gsonEle.get("results").getAsJsonArray();
+      System.out.println(gsonEle);
       
    }
 }
