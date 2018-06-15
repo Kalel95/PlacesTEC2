@@ -47,5 +47,10 @@
             <artifactId>artifact2.id</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>Autocolmpletar</groupId>
+            <artifactId>Autocolmpletar</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>
