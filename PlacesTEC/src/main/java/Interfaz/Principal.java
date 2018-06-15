@@ -42,113 +42,34 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
+        jTextField8 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1350, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Latitud");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 149, -1, -1));
-
-        jLabel2.setText("Longitud");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 187, -1, -1));
-
-        jLabel3.setText("Lugar");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 225, -1, -1));
-
-        jLabel4.setText("Medio");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 268, -1, -1));
-
-        jLabel5.setText("Dia");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 306, -1, -1));
-
-        jLabel6.setText("Mes");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 306, -1, -1));
-
-        jLabel7.setText("Año");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 306, 24, -1));
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 146, 50, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 184, 50, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 222, 50, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 265, 50, -1));
-
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 303, 18, -1));
-
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 303, 21, -1));
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 303, 19, -1));
-
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 341, -1, -1));
-
-        jButton2.setText("Guardar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, -1, -1));
-
-        jLabel8.setText("Código");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 56, -1));
-
-        jButton3.setText("Editar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, -1, -1));
-
-        jButton4.setText("Eliminar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton5.setText("Consultar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -156,7 +77,93 @@ public class Principal extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, -1, -1));
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 80, -1));
+        jPanel2.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 80, -1));
+
+        jLabel8.setText("Código");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 80, -1));
+
+        jLabel1.setText("Latitud");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
+        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 80, -1));
+
+        jLabel2.setText("Longitud");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+
+        jLabel3.setText("Lugar");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
+
+        jLabel4.setText("Medio");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 80, -1));
+
+        jButton4.setText("Eliminar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 80, -1));
+
+        jLabel5.setText("Dia");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
+
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 30, -1));
+
+        jLabel6.setText("Mes");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, -1));
+
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 30, -1));
+
+        jLabel7.setText("Año");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 24, -1));
+        jPanel2.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 40, -1));
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 80, -1));
+
+        jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 80, -1));
+
+        jButton3.setText("Editar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 80, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Bus", "Automóvil", "Avión", "Caminado" }));
+        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 80, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 500, 180));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -207,59 +214,87 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //validar que los jtextfield no esten vacíos
-        if((jTextField1.getText() == null || jTextField1.getText().equals(""))||
+        if(/*(jTextField1.getText() == null || jTextField1.getText().equals(""))||
                 (jTextField2.getText() == null || jTextField2.getText().equals(""))||
-                (jTextField3.getText() == null || jTextField3.getText().equals(""))||
-                (jTextField4.getText() == null || jTextField4.getText().equals(""))||
+                (jTextField3.getText() == null || jTextField3.getText().equals(""))||*/
+                (jComboBox1.getSelectedIndex() <1 || jComboBox1.getSelectedItem().toString()=="Seleccionar")||
                 (jTextField5.getText() == null || jTextField5.getText().equals(""))||
                 (jTextField6.getText() == null || jTextField6.getText().equals(""))||
                 (jTextField7.getText() == null || jTextField7.getText().equals(""))||
                 (jTextField8.getText() == null || jTextField7.getText().equals(""))){
             JOptionPane.showMessageDialog(null,"Debe completar los espacios vacios");
         }
-        else{
-            
-            int latitud = Integer.parseInt(jTextField1.getText());
-            int longitud = Integer.parseInt(jTextField2.getText());
+        else{                   
+            Geocoder d = new Geocoder();
+            GoogleGeocoderService c = new GoogleGeocoderService(d);
+        try {
+            //validar que los jtextfield no esten vacíos
+          if((jTextField1.getText() == null || jTextField1.getText().equals(""))||
+         (jTextField2.getText() == null || jTextField2.getText().equals(""))){
+              
+              if((jTextField3.getText() == null || jTextField3.getText().equals(""))){
+                 JOptionPane.showMessageDialog(null,"Debe completar la latitud y longitud o la dirección "); 
+              }
+              else{
+                 LatLng location = c.locationToCoordinate(jTextField3.getText()).getLocation();
+                 //System.out.println("La latitud es = " + location.getLat() + "\nLa longitud es = " + location.getLng());         
+                 //JOptionPane.showMessageDialog(null,"La latitud es = " + location.getLat() + "\nLa longitud es = " + 
+                 //location.getLng());
+                  
+                 String latitud = location.getLat().toString();      
+                 String longitud = location.getLng().toString();
+                 int codigo=Integer.parseInt(jTextField8.getText());
+                 //se crea un objeto tipo Constructor       
+                 Lugar persona=new Lugar(codigo,latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
+                 jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
+                 Basedatos.Insertar(persona);
+                 JOptionPane.showMessageDialog(null,persona );
+              }
+           }
+           else if((jTextField3.getText() == null || jTextField3.getText().equals(""))){
+               if((jTextField1.getText()) != null ||(jTextField2.getText() == null )){
+            GeocoderGeometry h = new GeocoderGeometry();
+            LatLng j = new LatLng(jTextField1.getText(), jTextField2.getText());
+            h.setLocation(j);
+            System.out.println(c.coordinateToLocation(h));
+                        
+            String latitud = jTextField1.getText();      
+            String longitud = jTextField2.getText();
             int codigo=Integer.parseInt(jTextField8.getText());
-            //se crea un objeto tipo Constructor       
-            Lugar persona=new Lugar(codigo,latitud,longitud,jTextField3.getText(),jTextField4.getText(),
-               jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
-            Basedatos.Insertar(persona);
-            JOptionPane.showMessageDialog(null,persona );
-        
-            System.out.println("\n*Aquí se hace un SELECT del usuario");
-             ObjectSet resultado=Basedatos.ConsultarLugar(new Lugar(0,0,0,null,null,null,null,null));
-		while(resultado.hasNext()) {
-			System.out.println(resultado.next().toString());
+            Lugar persona=new Lugar(codigo,latitud,longitud,c.coordinateToLocation(h),jComboBox1.getSelectedItem().toString(),
+                 jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
+                 Basedatos.Insertar(persona);
+                 JOptionPane.showMessageDialog(null,persona );
+               }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
                          
-		}
-                
-                //JOptionPane.showMessageDialog(null,x+"probando");
-                
+		}                                             
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
-        jTextField4.setText("");
+        jComboBox1.setSelectedIndex(0);
         jTextField5.setText("");
         jTextField6.setText("");
         jTextField7.setText("");
         jTextField8.setText("");
-        }
+        
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int latitud = Integer.parseInt(jTextField1.getText());
-        int longitud = Integer.parseInt(jTextField2.getText());       
+        String latitud = (jTextField1.getText());
+        String longitud = (jTextField2.getText());       
         int codigo=Integer.parseInt(jTextField8.getText());
     
-        Basedatos.Modificar(new Lugar(codigo,0,0,null,null,
-               null,null,null), codigo,latitud,longitud,jTextField3.getText(),jTextField4.getText(),
+        Basedatos.Modificar(new Lugar(codigo,null,null,null,null,
+               null,null,null), codigo,latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
                jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
                 
 		System.out.println("\n*Aquí se hace un SELECT del usuario*");
-		ObjectSet resultado=Basedatos.ConsultarLugar(new Lugar(0,0,0,"Puntarenas",null,null,null,null));
+		ObjectSet resultado=Basedatos.ConsultarLugar(new Lugar(0,null,null,"Puntarenas",null,null,null,null));
 		while(resultado.hasNext()) {
 			System.out.println(resultado.next().toString());
                         
@@ -269,7 +304,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int codigo = Integer.parseInt(jTextField8.getText());
-        Basedatos.Borrar(new Lugar(codigo,0,0,null,null,null,null,null));		
+        Basedatos.Borrar(new Lugar(codigo,null,null,null,null,null,null,null));		
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -312,6 +347,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -320,10 +356,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;

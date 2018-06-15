@@ -5,21 +5,23 @@
  */
 package PlacesTEC.capalogica.Estructuras;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Joel
  */
 public class Lugar {
     private int Codigo;
-    private int Latitud;
-    private int Longitud;
+    private String Latitud;
+    private String Longitud;
     private String Lugar;
     private String medio;
     private String dia;
     private String mes;
     private String año;
 
-    public Lugar(int Codigo,int Latitud, int Longitud, String Lugar, String medio, String dia, String mes, String año) {
+    public Lugar(int Codigo,String Latitud, String Longitud, String Lugar, String medio, String dia, String mes, String año) {
         this.Codigo = Codigo;
         this.Latitud = Latitud;
         this.Longitud = Longitud;
@@ -34,19 +36,19 @@ public class Lugar {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public int getLatitud() {
+    public String getLatitud() {
         return Latitud;
     }
 
-    public void setLatitud(int Latitud) {
+    public void setLatitud(String Latitud) {
         this.Latitud = Latitud;
     }
 
-    public int getLongitud() {
+    public String getLongitud() {
         return Longitud;
     }
 
-    public void setLongitud(int Longitud) {
+    public void setLongitud(String Longitud) {
         this.Longitud = Longitud;
     }
 
@@ -106,7 +108,7 @@ public class Lugar {
 				
 	return Dato;
 	}
-    public void modificarLugar(int Codigo,int Latitud, int Longitud, String Lugar, String medio, String dia, String mes, String año) {
+    public void modificarLugar(int Codigo,String Latitud, String Longitud, String Lugar, String medio, String dia, String mes, String año) {
 	this.Codigo = Codigo;
         this.Latitud = Latitud;
         this.Longitud = Longitud;
