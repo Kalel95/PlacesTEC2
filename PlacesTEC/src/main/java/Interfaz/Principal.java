@@ -34,8 +34,9 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         ApiPlaces completar = new ApiPlaces();
+        String x=jTextField4.getText();
+        ArrayList resp=completar.AutoCompletado("Cartago");
         AutoCompletar= new TextAutoCompleter( jTextField4 );
-        ArrayList resp=completar.AutoCompletado("Cartago");       
         AutoCompletar.addItems(resp);
         
         
