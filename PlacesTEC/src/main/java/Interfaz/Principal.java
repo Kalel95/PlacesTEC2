@@ -5,6 +5,7 @@
  */
 package Interfaz;
 
+import PlacesTEC.capalogica.Api.ApiPlaces;
 import PlacesTEC.capalogica.Api.GoogleGeocoderService;
 import PlacesTEC.capalogica.Estructuras.Lugar;
 import PlacesTEC.capalogica.logica.BD4O;
@@ -13,16 +14,17 @@ import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.model.GeocoderGeometry;
 import com.google.code.geocoder.model.LatLng;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import com.mxrck.autocompleter.TextAutoCompleter;
+import java.util.ArrayList;
 /**
  *
  * @author Joel
  */
 public class Principal extends javax.swing.JFrame {
+    TextAutoCompleter AutoCompletar;
     
     BD4O Basedatos=new BD4O();
     static Lugar usuarios;
@@ -31,6 +33,19 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal() {
         initComponents();
+        ApiPlaces completar = new ApiPlaces(); 
+        completar.AutoCompletado("Cartago");
+        AutoCompletar= new TextAutoCompleter( jTextField4 );
+        AutoCompletar.addItem("completar.AutoCompletado(\"Cartago\");");
+        AutoCompletar.addItem("segunda prueba");
+        AutoCompletar.addItem("autoAcompletar");
+        AutoCompletar.addItem("Java");
+        //AutoCompletar.addItems(os);
+        
+        ArrayList<String> resp1= new ArrayList<String>(); 
+        //resp1=completar.AutoCompletado("Cartago");
+        //AutoCompletar.addItems();
+        AutoCompletar.setCaseSensitive(false); 
     }
 
     /**
@@ -64,6 +79,7 @@ public class Principal extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jTextField4 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1350, 700));
@@ -162,6 +178,7 @@ public class Principal extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Bus", "Automóvil", "Avión", "Caminado" }));
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 80, -1));
+        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 110, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 500, 180));
 
@@ -360,6 +377,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;

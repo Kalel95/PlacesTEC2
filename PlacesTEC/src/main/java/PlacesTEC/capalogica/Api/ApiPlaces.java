@@ -64,14 +64,17 @@ public class ApiPlaces {
     }
     public ArrayList AutoCompletado(String direcACompletar) {
         List<Prediction> predictions = client.getPlacePredictions(direcACompletar);
-        ArrayList<String> aray = null;
+        //ArrayList<String> aray = null;
         
+        ArrayList<String> resp = new ArrayList<String>();
         
         int num=predictions.size();
         for(int i=0; i<num; i++) {
-            System.out.println(predictions.get(i).getDescription());
-            aray.add(i, direcACompletar);
+            //System.out.println(predictions.get(i).getDescription());
+            //aray.add(i, direcACompletar);
+            resp.add(predictions.get(i).getDescription());
         }
-        return aray;
+        System.out.println(resp);
+        return resp;
     }
 }
