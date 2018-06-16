@@ -34,15 +34,11 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         ApiPlaces completar = new ApiPlaces(); 
-        completar.AutoCompletado("Cartago");
+        ArrayList resp=completar.AutoCompletado("Cot,Cartago");
         AutoCompletar= new TextAutoCompleter( jTextField4 );
-        AutoCompletar.addItem("completar.AutoCompletado(\"Cartago\");");
-        AutoCompletar.addItem("segunda prueba");
-        AutoCompletar.addItem("autoAcompletar");
-        AutoCompletar.addItem("Java");
-        //AutoCompletar.addItems(os);
+        AutoCompletar.addItems(resp);
         
-        ArrayList<String> resp1= new ArrayList<String>(); 
+        //ArrayList<String> resp1= new ArrayList<String>(); 
         //resp1=completar.AutoCompletado("Cartago");
         //AutoCompletar.addItems();
         AutoCompletar.setCaseSensitive(false); 

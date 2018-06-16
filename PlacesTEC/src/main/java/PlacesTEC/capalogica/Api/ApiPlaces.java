@@ -74,7 +74,7 @@ public class ApiPlaces {
             //aray.add(i, direcACompletar);
             resp.add(predictions.get(i).getDescription());
         }
-        System.out.println(resp);
+        //System.out.println(resp);
         return resp;
     }
 }
