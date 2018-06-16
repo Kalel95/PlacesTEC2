@@ -5,6 +5,7 @@
  */
 package PlacesTEC.capalogica.Api;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import se.walkercrou.places.GooglePlaces;
@@ -17,7 +18,7 @@ import se.walkercrou.places.Prediction;
  * @author Kenneth
  */
 public class ApiPlaces {
-    GooglePlaces client = new GooglePlaces("AIzaSyAzamKw_Gz499mqnxp7LiBc8MNFijHHRI8");
+    GooglePlaces client = new GooglePlaces("AIzaSyCeK84BmV_6d1hRdtb5l5hIaX_7JrobptU");
     Param a = new Param("type=restaurant");
     //Param a = new Param("keyword=tacobell");
   
@@ -61,13 +62,16 @@ public class ApiPlaces {
             System.out.println("Hours:\n " + detailedEmpireStateBuilding.getHours());
         //}*/
     }
-    public void AutoCompletado(String direcACompletar) {
+    public ArrayList AutoCompletado(String direcACompletar) {
         List<Prediction> predictions = client.getPlacePredictions(direcACompletar);
+        ArrayList<String> aray = null;
         
         
         int num=predictions.size();
         for(int i=0; i<num; i++) {
-            System.out.println(predictions.get(i));
+            System.out.println(predictions.get(i).getDescription());
+            aray.add(i, direcACompletar);
         }
+        return aray;
     }
 }

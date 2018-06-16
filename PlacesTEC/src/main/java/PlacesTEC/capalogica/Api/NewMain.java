@@ -18,6 +18,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -31,13 +32,15 @@ public class NewMain {
      */
     public static void main(String[] args) throws IOException, ApiException, InterruptedException {
         // TODO code application logic here
-        //ApiPlaces a = new ApiPlaces();
-        //a.AutoCompletado("alajuelita");
+        ApiPlaces a = new ApiPlaces();
+        
+        ArrayList<String> aray=a.AutoCompletado("Heredia");
+        aray.get(3);
         //a.imprimir();
         //ejemplaces b = new ejemplaces();
         //b.imp();
         
-        Geocoder d = new Geocoder();
+        /*Geocoder d = new Geocoder();
         GoogleGeocoderService c = new GoogleGeocoderService(d);
         LatLng location = c.locationToCoordinate("Cot,Oreamuno, Cartago, Costa Rica").getLocation();
         System.out.println("La latitud es = " + location.getLat() + "\nLa longitud es = " + location.getLng());
@@ -45,7 +48,7 @@ public class NewMain {
         GeocoderGeometry h = new GeocoderGeometry();
         LatLng j = new LatLng("9.892196199999999", "-83.87248249999999");
         h.setLocation(j);
-        System.out.println(c.coordinateToLocation(h));
+        System.out.println(c.coordinateToLocation(h));*/
         
         
         
