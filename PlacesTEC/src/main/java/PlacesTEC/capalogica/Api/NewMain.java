@@ -32,10 +32,10 @@ public class NewMain {
      */
     public static void main(String[] args) throws IOException, ApiException, InterruptedException {
         // TODO code application logic here
-        ApiPlaces a = new ApiPlaces();
+        //ApiPlaces a = new ApiPlaces();
         
-        ArrayList<String> aray=a.AutoCompletado("Heredia");
-        aray.get(3);
+        //ArrayList<String> aray=a.AutoCompletado("Heredia");
+        //aray.get(3);
         //a.imprimir();
         //ejemplaces b = new ejemplaces();
         //b.imp();
@@ -65,10 +65,10 @@ public class NewMain {
                     System.out.println(t.rows[i].elements[j].distance);
                 }
             }*/
-        /*String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};
+        String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};
         String[] b = {"San Jose Costa Rica","Cartago Province,Cartago,Costa Rica"};
         DistaciaMatrixApi l = new DistaciaMatrixApi();
-        l.impDistancia(a, b, "Carro");*/
+        l.impDistancia(a, b, "Carro");
     }
 }
     

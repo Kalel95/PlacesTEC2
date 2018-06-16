@@ -15,6 +15,8 @@ import com.google.maps.model.TravelMode;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -45,7 +47,17 @@ public class DistaciaMatrixApi {
 		//long[][] array=new long[origins.length][destinations.length];
             for(int i=0;i<origenes.length;i++){
                 for(int j=0;j<destinos.length;j++){
-                    System.out.println(t.rows[i].elements[j].distance);
+                    String z = null;
+               
+                    z=t.rows[i].elements[j].distance.toString();
+                    Pattern p= Pattern.compile("[km]");
+                    Matcher m= p.matcher(z);
+                    if(m.find()){
+			String remplazado=m.replaceAll("");
+                        Double a = Double.parseDouble(remplazado);
+			System.out.println(a);
+		}
+                    
                 }
             }
     }
