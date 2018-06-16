@@ -33,10 +33,11 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal() {
         initComponents();
-        ApiPlaces completar = new ApiPlaces(); 
-        ArrayList resp=completar.AutoCompletado("Cot,Cartago");
+        ApiPlaces completar = new ApiPlaces();
         AutoCompletar= new TextAutoCompleter( jTextField4 );
+        ArrayList resp=completar.AutoCompletado("Cartago");       
         AutoCompletar.addItems(resp);
+        
         
         //ArrayList<String> resp1= new ArrayList<String>(); 
         //resp1=completar.AutoCompletado("Cartago");
@@ -76,6 +77,10 @@ public class Principal extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField4 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        jTextField9 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1350, 700));
@@ -109,7 +114,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setText("Longitud");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
-        jLabel3.setText("Lugar");
+        jLabel3.setText("Dirección ");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
         jLabel4.setText("Medio");
@@ -174,7 +179,22 @@ public class Principal extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Bus", "Automóvil", "Avión", "Caminado" }));
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 80, -1));
-        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 110, -1));
+        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 80, -1));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
+
+        jLabel10.setText("Lugar");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, -1, -1));
+
+        jButton6.setText("Aceptar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, -1, -1));
+
+        jTextField9.setText("jTextField9");
+        jPanel2.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 500, 180));
 
@@ -246,7 +266,25 @@ public class Principal extends javax.swing.JFrame {
          (jTextField2.getText() == null || jTextField2.getText().equals(""))){
               
               if((jTextField3.getText() == null || jTextField3.getText().equals(""))){
-                 JOptionPane.showMessageDialog(null,"Debe completar la latitud y longitud o la dirección "); 
+                  if(jTextField4.getText()==null|| jTextField4.getText().equals("")){
+                      JOptionPane.showMessageDialog(null,"Debe completar la latitud y longitud o la dirección ");
+                  }
+                  else{
+                      LatLng location = c.locationToCoordinate(jTextField4.getText()).getLocation();
+                    //System.out.println("La latitud es = " + location.getLat() + "\nLa longitud es = " + location.getLng());         
+                    //JOptionPane.showMessageDialog(null,"La latitud es = " + location.getLat() + "\nLa longitud es = " + 
+                    //location.getLng());
+                  
+                    String latitud = location.getLat().toString();      
+                    String longitud = location.getLng().toString();
+                    int codigo=Integer.parseInt(jTextField8.getText());
+                    //se crea un objeto tipo Constructor       
+                    Lugar persona=new Lugar(codigo,latitud,longitud,jTextField4.getText(),jComboBox1.getSelectedItem().toString(),
+                    jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
+                    Basedatos.Insertar(persona);
+                    JOptionPane.showMessageDialog(null,persona );
+                  }
+                  
               }
               else{
                  LatLng location = c.locationToCoordinate(jTextField3.getText()).getLocation();
@@ -325,6 +363,10 @@ public class Principal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,Basedatos.ConsultarLugares() );
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -360,8 +402,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -369,6 +413,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
@@ -378,5 +423,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
