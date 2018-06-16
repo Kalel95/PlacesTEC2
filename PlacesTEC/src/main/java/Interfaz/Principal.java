@@ -19,12 +19,25 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
+import se.walkercrou.places.GooglePlaces;
+import se.walkercrou.places.Param;
+import se.walkercrou.places.Place;
 /**
  *
  * @author Joel
  */
 public class Principal extends javax.swing.JFrame {
     TextAutoCompleter AutoCompletar;
+    //Se crea el modelo de las Tablas
+    DefaultTableModel tabla1= new DefaultTableModel();
+    DefaultTableModel tSInteres= new DefaultTableModel();
+    
     
     BD4O Basedatos=new BD4O();
     static Lugar usuarios;
@@ -33,11 +46,35 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal() {
         initComponents();
+        //Se ingresa la informacion de las tablas
+        tabla1.addColumn("Locacion");
+        tabla1.addColumn("Lat");
+        tabla1.addColumn("Long");
+        tSInteres.addColumn("Imagen");
+        tSInteres.addColumn("ID");
+        tSInteres.addColumn("TEL");
+        tSInteres.addColumn("Ratin");
+        tSInteres.addColumn("Horario");
+        tSInteres.addColumn("Web");
+        for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
+            Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
+            String Dato[]=new String[3];
+            Dato[0]= lu.getLugar();
+            Dato[1]=lu.getLatitud();
+            Dato[2]=lu.getLongitud();
+            tabla1.addRow(Dato);
+        }
         ApiPlaces completar = new ApiPlaces();
         String x=jTextField4.getText();
         ArrayList resp=completar.AutoCompletado("Cartago");
         AutoCompletar= new TextAutoCompleter( jTextField4 );
         AutoCompletar.addItems(resp);
+        
+        //Se inician las tablas con la informacion ya establesida
+        jTable1.setModel(tabla1);
+        jTable2.setDefaultRenderer(Object.class, new TablaImagen());
+        //tSInteres.addRow(new Object[]{new JLabel(new ImageIcon(getClass().getResource("Interfaz\\Imagenes\\a.png")))});
+        jTable2.setModel(tSInteres);
         
         
         //ArrayList<String> resp1= new ArrayList<String>(); 
@@ -45,6 +82,38 @@ public class Principal extends javax.swing.JFrame {
         //AutoCompletar.addItems();
         AutoCompletar.setCaseSensitive(false); 
     }
+    //--------------------------------------------------------------------------------------------
+    public void InfSInteres(double Lat, double Long, int radio, String TipLInteres) {
+        GooglePlaces client = new GooglePlaces("AIzaSyCeK84BmV_6d1hRdtb5l5hIaX_7JrobptU");
+        Param a = new Param("type="+TipLInteres);
+        //9.8666386,-83.921331
+        List<Place> places = client.getNearbyPlaces(Lat, Long, radio, GooglePlaces.MAXIMUM_RESULTS, a);
+        
+        System.out.println(places.size());
+        int num=places.size();
+        System.out.println(Arrays.deepToString(places.toArray()));
+        for(int i=0; i<num; i++) {
+            Place place = places.get(i).getDetails();
+            Object[] fila = new Object[6];
+            try{
+                //ImageIcon icono=new ImageIcon(place.getIconImage());
+                fila[0]= new JLabel(new ImageIcon(getClass().getResource("/Desktop/tiger-1526704_960_720.png")));  
+            }
+            catch(Exception ex){fila[0]= new JLabel("no se encontro"); }
+            fila[1]= place.getPlaceId();
+            fila[2]= place.getInternationalPhoneNumber();
+            fila[3]= place.getRating();
+            fila[4]= place.getHours();
+            fila[5]= place.getWebsite();
+            //System.out.println(place.getPhotos().get(i).getImage().toString());
+            System.out.println("Lat: " + place.getWebsite());
+            System.out.println("Long: " + place.getLongitude());
+            System.out.println("Adress: " + place.getAddress());
+            tSInteres.addRow(fila);
+        }
+        jTable2.setModel(tSInteres);
+    }
+    //--------------------------------------------------------------------------------------------
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,6 +151,19 @@ public class Principal extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jTextField9 = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jTextField10 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel13 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1350, 700));
@@ -197,7 +279,75 @@ public class Principal extends javax.swing.JFrame {
         jTextField9.setText("jTextField9");
         jPanel2.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 500, 180));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 500, 180));
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel4.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 60, -1));
+
+        jLabel11.setText("Rango:");
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 20));
+        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
+
+        jButton8.setText("Buscar Radio");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, -1, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "restaurant", "cinema", "doctor", "museum", "bar" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, -1));
+
+        jLabel12.setText("Tipo de Sitio:");
+        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, 20));
+
+        jTable1.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Ventanilla", "Estado"
+            }
+        ));
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 310, 100));
+
+        jLabel13.setText("Locacion");
+        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
+
+        jTable2.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Ventanilla", "Estado"
+            }
+        ));
+        jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane2.setViewportView(jTable2);
+
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 660, 290));
+
+        jLabel14.setText("Sitios de interes:");
+        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, -1, -1));
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 690, 430));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -368,6 +518,26 @@ public class Principal extends javax.swing.JFrame {
     
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        
+        if(jTextField10.getText()==null || jTextField10.getText().equals("")) {
+            JOptionPane.showMessageDialog(null,"Debe ingresar un numero en los espacios");
+            return;
+        }
+        
+        int Fila=jTable1.getSelectedRow();
+        if (Fila==-1) JOptionPane.showMessageDialog(null, "Seleccione una locacion");
+        else if(Fila>=0){
+            InfSInteres(Double.parseDouble((String)jTable1.getValueAt(Fila, 1)), Double.parseDouble((String)jTable1.getValueAt(Fila, 2)), Integer.parseInt(jTextField10.getText()), jComboBox2.getSelectedItem().toString());
+        }
+        
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -404,9 +574,16 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -416,7 +593,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;

@@ -19,19 +19,20 @@ import se.walkercrou.places.Prediction;
  */
 public class ApiPlaces {
     GooglePlaces client = new GooglePlaces("AIzaSyCeK84BmV_6d1hRdtb5l5hIaX_7JrobptU");
-    Param a = new Param("type=restaurant");
     //Param a = new Param("keyword=tacobell");
   
-    public void imprimir() {
+    public void imprimir(double Lat, double Long, int radio, String TipLInteres) {
+        Param a = new Param("type="+TipLInteres);
         //9.8666386,-83.921331
-        List<Place> places = client.getNearbyPlaces(9.8666386, -83.921331, 500, GooglePlaces.MAXIMUM_RESULTS, a);
+        List<Place> places = client.getNearbyPlaces(Lat, Long, radio, GooglePlaces.MAXIMUM_RESULTS, a);
+        ArrayList<ArrayList> LInt = new ArrayList<>();
         
         System.out.println(places.size());
         int num=places.size();
         System.out.println(Arrays.deepToString(places.toArray()));
         for(int i=0; i<num; i++) {
             Place place = places.get(i).getDetails();
-            System.out.println(place.getName());
+            System.out.println(place.getIconImage());
             System.out.println("Lat: " + place.getLatitude());
             System.out.println("Long: " + place.getLongitude());
             System.out.println("Adress: " + place.getAddress());
