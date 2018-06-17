@@ -25,6 +25,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -79,11 +80,12 @@ public class Principal extends javax.swing.JFrame {
             Dato[3]=lu.getLongitud();
             tabla1.addRow(Dato);
         }
-        ApiPlaces completar = new ApiPlaces();
-        String x=jTextField4.getText();
+        ApiPlaces completar = new ApiPlaces();       
         ArrayList resp=completar.AutoCompletado("san");
         AutoCompletar= new TextAutoCompleter( jTextField4 );
         AutoCompletar.addItems(resp);
+        
+        
         
         //Se inician las tablas con la informacion ya establesida
         jTable1.setModel(tabla1);
@@ -188,6 +190,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jTextField11 = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1350, 700));
@@ -425,6 +428,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, -1, -1));
+
+        jButton11.setText("Calcular");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -679,12 +690,14 @@ public class Principal extends javax.swing.JFrame {
             //int codlugar = Integer.parseInt(jTextField11.getText());
             //Lugar lugar = (Lugar)Basedatos.ConsultarLugares().get(codlugar);
             //System.out.println(lugar);
-            int fila=jTable1.getSelectedRow();
-            int colum=jTable1.getSelectedColumn();
+            int fila=jTable1.getSelectedRow();           
             String Dato[]=new String[2];
             Dato[0]=(String) tabla1.getValueAt(fila,1);
             Dato[1]=(String) tabla1.getValueAt(fila,0);
             tablaruta.addRow(Dato);
+            
+        
+        
            
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -735,6 +748,38 @@ public class Principal extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null, "Seleccione un lugar")
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};       
+        String[] b = {"San Jose Costa Rica","Cartago Province,Cartago,Costa Rica"};
+        String[] result = Stream.of(a, b).flatMap(Stream::of).toArray(String[]::new);
+        System.out.println(Arrays.toString(result));
+        String[] p = {};       
+        String[] q = {};
+        int filas = tablaruta.getRowCount();
+        int Fila=jTable3.getSelectedRow();
+        System.out.println(filas);
+        int i=0;
+        /*while(i<=filas){
+            String lugar=(String) tablaruta.getValueAt(Fila,1);
+            System.out.println(lugar);
+        String[] result = Stream.of(a, b).flatMap(Stream::of).toArray(String[]::new);
+        System.out.println(Arrays.toString(result));
+            
+        }*/
+        DistaciaMatrixApi l = new DistaciaMatrixApi();
+        try {
+            ArrayList w=l.impDistancia(a, b, "Automóvil");
+            JOptionPane.showMessageDialog(null,w);
+            return;
+        } catch (ApiException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -767,6 +812,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
