@@ -6,6 +6,7 @@
 package Interfaz;
 
 import PlacesTEC.capalogica.Api.ApiPlaces;
+import PlacesTEC.capalogica.Api.DistaciaMatrixApi;
 import PlacesTEC.capalogica.Api.GoogleGeocoderService;
 import PlacesTEC.capalogica.Estructuras.Lugar;
 import PlacesTEC.capalogica.logica.BD4O;
@@ -13,6 +14,7 @@ import com.db4o.ObjectSet;
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.model.GeocoderGeometry;
 import com.google.code.geocoder.model.LatLng;
+import com.google.maps.errors.ApiException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -278,7 +280,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 80, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Bus", "Automóvil", "Avión", "Caminado" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Bicicleta", "Automóvil", "Caminando" }));
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 80, -1));
 
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -669,19 +671,7 @@ public class Principal extends javax.swing.JFrame {
             Dato[0]=(String) tabla1.getValueAt(fila,1);
             Dato[1]=(String) tabla1.getValueAt(fila,0);
             tablaruta.addRow(Dato);
-           //System.out.println(tabla1.getValueAt(1,1));
-        
-            /*for(int i=lugar;i<Basedatos.ConsultarLugares().size();i++) {
-                if(lugar== lu){
-                
-            //Lugar lu = (Lugar)Basedatos.ConsultarLugar(new Lugar(2,null,null,null,null,null,null,null));
-            String Dato[]=new String[3];
-            Dato[0]= lu.getLugar();
-            Dato[1]=lu.getLatitud();
-            Dato[2]=lu.getLongitud();
-            tablaruta.addRow(Dato);
-            }
-            }*/
+           
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -692,6 +682,18 @@ public class Principal extends javax.swing.JFrame {
             InfSInteres(Double.parseDouble((String)jTable1.getValueAt(Fila, 2)), 
             Double.parseDouble((String)jTable1.getValueAt(Fila, 3)), Integer.parseInt(jTextField10.getText()), 
             jComboBox2.getSelectedItem().toString());
+        }
+        String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};
+        String[] b = {"San Jose Costa Rica","Cartago Province,Cartago,Costa Rica"};
+        DistaciaMatrixApi l = new DistaciaMatrixApi();
+        try {
+            l.impDistancia(a, b, "Automóvil");
+        } catch (ApiException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton9ActionPerformed
 

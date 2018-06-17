@@ -68,7 +68,7 @@ public class NewMain {
         String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};
         String[] b = {"San Jose Costa Rica","Cartago Province,Cartago,Costa Rica"};
         DistaciaMatrixApi l = new DistaciaMatrixApi();
-        l.impDistancia(a, b, "Carro");
+        l.impDistancia(a, b, "Automóvil");
     }
 }
     

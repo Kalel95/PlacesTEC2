@@ -26,13 +26,13 @@ public class DistaciaMatrixApi {
     public void impDistancia(String[] origenes, String[] destinos, String modoViaje) throws ApiException, InterruptedException, IOException {
         TravelMode modoDeViaje = null;
         if (null!=modoViaje) switch (modoViaje) {
-            case "Carro":
+            case "Automóvil":
                 modoDeViaje=TravelMode.DRIVING;
                 break;
             case "Bicicleta":
                 modoDeViaje=TravelMode.BICYCLING;
                 break;
-            case "A pie":
+            case "Caminando":
                 modoDeViaje=TravelMode.WALKING;
                 break;
             default:
