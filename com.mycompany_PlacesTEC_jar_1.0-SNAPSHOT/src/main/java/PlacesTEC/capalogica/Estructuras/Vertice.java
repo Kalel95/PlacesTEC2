@@ -36,11 +36,36 @@ public class Vertice<T> {
 		
     }
    	
-    public void asignar_arista(String ID_A, Vertice salida,Vertice meta, float Distancia,float tiempo){
+    public void asignar_arista(String ID_A, Vertice salida,Vertice meta, int Distancia,int tiempo){
         Arista nueva_arista = new Arista(ID_A,salida,meta,Distancia,tiempo);
         aristas.add(nueva_arista);
         //System.out.println("Se agrego nueva arista llamada:" + " "+ nueva_arista.getID_A());
         
+    }
+    
+    @Override
+     public int hashCode() {
+        final int prime = 31;
+        int resultado = 1;
+        resultado = prime * resultado + ((ID_V == null) ? 0 : ID_V.hashCode());
+        return resultado;
+    }
+     
+     @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Vertice other = (Vertice) obj;
+        if (ID_V == null) {
+            if (other.ID_V != null)
+                return false;
+        } else if (!ID_V.equals(other.ID_V))
+            return false;
+        return true;
     }
     
     @Override
@@ -90,4 +115,6 @@ public class Vertice<T> {
     
     
 }
+
+
 

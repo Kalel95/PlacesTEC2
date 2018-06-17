@@ -13,10 +13,10 @@ public class Arista {
     private String ID_A;
     private Vertice salida;
     private Vertice meta;
-    private float  tiempo;
-    private float distancia;
+    private int  tiempo;
+    private int distancia;
 
-    public Arista(String ID_A, Vertice salida, Vertice meta, float distancia,float tiempo) {
+    public Arista(String ID_A, Vertice salida, Vertice meta, int distancia, int tiempo) {
         this.ID_A = ID_A;
         this.meta = meta;
         this.salida = salida;
@@ -37,8 +37,6 @@ public class Arista {
        
     }
     
-    
-
     public String getID_A() {
         return ID_A;
     }
@@ -59,7 +57,7 @@ public class Arista {
         return distancia;
     }
 
-    public void setDistancia(float distancia) {
+    public void setDistancia(int distancia) {
         this.distancia = distancia;
     }
 
@@ -75,12 +73,9 @@ public class Arista {
         return tiempo;
     }
 
-    public void setTiempo(float tiempo) {
+    public void setTiempo(int tiempo) {
         this.tiempo = tiempo;
     }
     
     
-    
-    
 }
-

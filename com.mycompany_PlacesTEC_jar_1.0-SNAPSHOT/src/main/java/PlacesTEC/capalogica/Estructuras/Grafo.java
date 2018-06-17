@@ -16,15 +16,18 @@ import java.util.*;
  *
  * @author Joan
  */
+import java.util.*;
 public class Grafo<T> {
     private LinkedList <Vertice> vertices;
+    private LinkedList <Arista>  aristas;
     private LinkedList <Arista> recorrido;
     private LinkedList <Arista> ruta;
    
     public Grafo(){
 		this.vertices = new LinkedList<Vertice>();
                 this.recorrido = new LinkedList<Arista>();
-                this.ruta = new LinkedList<Arista>();
+                this.recorrido = new LinkedList<Arista>();
+                this.aristas = new LinkedList<Arista>();
 	}
     
     public void agregar_Vertices(String ID, T contenido){
@@ -39,49 +42,20 @@ public class Grafo<T> {
         vertices.add(nuevo);
         
     }
-     
-     public float distancia_entre_aristas(String V_Origen,String V_Destino,String ModoDeViaje) throws ApiException, IOException, InterruptedException{
-         if (V_Origen.equals(V_Origen)){
-             return 0;
-         }
-         Vertice origen =  buscarVertice(V_Origen);
-         Vertice destino = buscarVertice(V_Destino);
-         
-         TravelMode modoDeViaje = null;
-         if (null!=ModoDeViaje) switch (ModoDeViaje) {
-            case "Carro":
-                modoDeViaje=TravelMode.DRIVING;
-                break;
-            case "Bicicleta":
-                modoDeViaje=TravelMode.BICYCLING;
-                break;
-            case "A pie":
-                modoDeViaje=TravelMode.WALKING;
-                break;
-            default:
-                break;
-        }
-         
-        GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyAzamKw_Gz499mqnxp7LiBc8MNFijHHRI8").build();
-        DistanceMatrixApiRequest req=DistanceMatrixApi.newRequest(context);
-        //DistanceMatrix t=req.origins(origenes).destinations(destinos).mode(modoDeViaje).await();
-        DistanceMatrix t=req.origins(V_Origen).destinations(V_Destino).mode(modoDeViaje).await();
-        String distancia; 
-        
-        distancia = t.rows[0].elements[0].distance.toString();
-        return 0;
-     }
-
-    public void agregarArista(String ID_V,String ID_A, Vertice origen, Vertice destino, float distancia,float tiempo){
+    
+    public void agregarArista(String ID_V,String ID_A, Vertice origen, Vertice destino, int distancia,int tiempo){
 	Vertice verti = buscarVertice(ID_V);  //Buscar el vértice origen y agrega un nodo al final de la lista de aristas de ese vértice
+        Arista nueva_arista = new Arista(ID_A, destino, destino, distancia,tiempo);
         verti.asignar_arista(ID_A, destino, destino, distancia,tiempo);
+        aristas.add(nueva_arista);
+        
 	}
     
     
     public Vertice buscarVertice(String ID_V){
 		//Recorre la lista de vertices
 		for(int indice = 0; indice < this.vertices.size(); indice++){
-			if(this.vertices.get(indice).getID().equals(ID_V)){;  //Si encuentra el vértice lo retorna
+			if(this.vertices.get(indice).getID().equals(ID_V)){  //Si encuentra el vértice lo retorna
 				return this.vertices.get(indice);
                        }
                 
@@ -150,8 +124,23 @@ public class Grafo<T> {
 	}
         
         public void agregar_ruta(String V_origen, String V_destino){
-            
-            
+            Vertice vactual;
+            Arista  aactual;
+            float distancia = 0;
+            float duracion = 0;
+            for(int i=0; i < this.vertices.size(); i++){          
+                vactual = vertices.get(i);
+               for(int j=0; i<  vactual.getAristas().size(); j++){
+                   aactual= (Arista) vactual.getAristas().get(i);
+                   if(aactual.getMeta().getID_V().equals(V_destino)){
+                       distancia += aactual.getDistancia();
+                       duracion += aactual.getTiempo();
+                       break;
+                   }
+                    distancia += aactual.getDistancia();
+                    duracion += aactual.getTiempo();
+               } 
+            }
         }
 
     public LinkedList<Vertice> getVertices() {
@@ -162,7 +151,28 @@ public class Grafo<T> {
         this.vertices = vertices;
     }
 
-   
-        
+    public LinkedList<Arista> getAristas() {
+        return aristas;
+    }
+
+    public void setAristas(LinkedList<Arista> aristas) {
+        this.aristas = aristas;
+    }
+
+    public LinkedList<Arista> getRecorrido() {
+        return recorrido;
+    }
+
+    public void setRecorrido(LinkedList<Arista> recorrido) {
+        this.recorrido = recorrido;
+    }
+
+    public LinkedList<Arista> getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(LinkedList<Arista> ruta) {
+        this.ruta = ruta;
+    }
         
 }
