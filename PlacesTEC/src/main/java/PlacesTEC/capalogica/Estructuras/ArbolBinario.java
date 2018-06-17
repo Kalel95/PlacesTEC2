@@ -17,6 +17,7 @@ public class ArbolBinario<T> {
     private ANodoArbol<T> padre;
     private ANodoArbol<T> izquierdo;
     private ANodoArbol<T> derecho;
+    private String[] latlng;
     
     //Constructores
     
@@ -43,12 +44,14 @@ public class ArbolBinario<T> {
      *
      * @param contenido
      * @param prioridad
+     * @param latlng
      */
-    public ArbolBinario(T contenido, int prioridad) {
+    public ArbolBinario(T contenido, int prioridad, String[] latlng) {
         this.contenido = contenido;
         this.padre = new ANodoArbol(contenido, prioridad);
         this.izquierdo = null;
         this.derecho = null;
+        this.latlng = latlng;
     }
     // Verificar si el arbol esta vacio
 

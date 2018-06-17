@@ -58,6 +58,7 @@ public class Principal extends javax.swing.JFrame {
         tSInteres.addColumn("Ratin");
         tSInteres.addColumn("Horario");
         tSInteres.addColumn("Web");
+        tSInteres.addColumn("Nombre");
         tablaruta.addColumn("Destino");
         tablaruta.addColumn("Llegada");
         jTable3.setModel(tablaruta);
@@ -104,7 +105,7 @@ public class Principal extends javax.swing.JFrame {
         System.out.println(Arrays.deepToString(places.toArray()));
         for(int i=0; i<num; i++) {
             Place place = places.get(i).getDetails();
-            Object[] fila = new Object[6];
+            Object[] fila = new Object[7];
             try{
                 //ImageIcon icono=new ImageIcon(place.getIconImage());
                 fila[0]= new JLabel(new ImageIcon(getClass().getResource("/Desktop/tiger-1526704_960_720.png")));  
@@ -115,6 +116,7 @@ public class Principal extends javax.swing.JFrame {
             fila[3]= place.getRating();
             fila[4]= place.getHours();
             fila[5]= place.getWebsite();
+            fila[6]= place.getName();
             //System.out.println(place.getPhotos().get(i).getImage().toString());
             System.out.println("Lat: " + place.getWebsite());
             System.out.println("Long: " + place.getLongitude());
@@ -174,6 +176,7 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -364,10 +367,18 @@ public class Principal extends javax.swing.JFrame {
         jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane2.setViewportView(jTable2);
 
-        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 420, 150));
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 550, 150));
 
         jLabel14.setText("Sitios de interes:");
         jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, -1, -1));
+
+        jButton9.setText("AgregarFav");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 710, 310));
 
@@ -606,8 +617,8 @@ public class Principal extends javax.swing.JFrame {
         int Fila=jTable1.getSelectedRow();
         if (Fila==-1) JOptionPane.showMessageDialog(null, "Seleccione una locacion");
         else if(Fila>=0){
-            InfSInteres(Double.parseDouble((String)jTable1.getValueAt(Fila, 1)), 
-            Double.parseDouble((String)jTable1.getValueAt(Fila, 2)), Integer.parseInt(jTextField10.getText()), 
+            InfSInteres(Double.parseDouble((String)jTable1.getValueAt(Fila, 2)), 
+            Double.parseDouble((String)jTable1.getValueAt(Fila, 3)), Integer.parseInt(jTextField10.getText()), 
             jComboBox2.getSelectedItem().toString());
         }
         
@@ -638,6 +649,17 @@ public class Principal extends javax.swing.JFrame {
             }
             }*/
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        int Fila=jTable2.getSelectedRow();
+        if (Fila==-1) JOptionPane.showMessageDialog(null, "Seleccione un lugar");
+        else if(Fila>=0){
+            InfSInteres(Double.parseDouble((String)jTable1.getValueAt(Fila, 2)), 
+            Double.parseDouble((String)jTable1.getValueAt(Fila, 3)), Integer.parseInt(jTextField10.getText()), 
+            jComboBox2.getSelectedItem().toString());
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -677,6 +699,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
