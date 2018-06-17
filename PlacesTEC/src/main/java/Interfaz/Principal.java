@@ -8,6 +8,8 @@ package Interfaz;
 import PlacesTEC.capalogica.Api.ApiPlaces;
 import PlacesTEC.capalogica.Api.DistaciaMatrixApi;
 import PlacesTEC.capalogica.Api.GoogleGeocoderService;
+import PlacesTEC.capalogica.Estructuras.ArbolBinario;
+import PlacesTEC.capalogica.Estructuras.Favoritos;
 import PlacesTEC.capalogica.Estructuras.Lugar;
 import PlacesTEC.capalogica.logica.BD4O;
 import com.db4o.ObjectSet;
@@ -46,6 +48,7 @@ public class Principal extends javax.swing.JFrame {
     static Lugar usuarios;
     //ObjectSet resultado;
     static String x="";
+    static ArbolBinario arbol;
     
     public Principal() {
         initComponents();
@@ -178,6 +181,7 @@ public class Principal extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -379,7 +383,15 @@ public class Principal extends javax.swing.JFrame {
                 jButton9ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
+        jPanel4.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
+
+        jButton10.setText("Consulta");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 710, 310));
 
@@ -654,6 +666,8 @@ public class Principal extends javax.swing.JFrame {
             Double.parseDouble((String)jTable1.getValueAt(Fila, 3)), Integer.parseInt(jTextField10.getText()), 
             jComboBox2.getSelectedItem().toString());
         }
+        String[] latitudLong={String.valueOf(jTable1.getValueAt(Fila, 2)),String.valueOf(jTable1.getValueAt(Fila, 3))};
+        arbol=new ArbolBinario(latitudLong);
         
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -676,26 +690,50 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
+        Favoritos fav=null;
         int Fila=jTable2.getSelectedRow();
+        int Fila1=jTable1.getSelectedRow();
         if (Fila==-1) JOptionPane.showMessageDialog(null, "Seleccione un lugar");
         else if(Fila>=0){
-            InfSInteres(Double.parseDouble((String)jTable1.getValueAt(Fila, 2)), 
-            Double.parseDouble((String)jTable1.getValueAt(Fila, 3)), Integer.parseInt(jTextField10.getText()), 
-            jComboBox2.getSelectedItem().toString());
+            JLabel image =  (JLabel) tSInteres.getValueAt(Fila, 0);
+            String imag = image.getText();
+            String id = (String) tSInteres.getValueAt(Fila, 1);
+            String tel = (String) tSInteres.getValueAt(Fila, 2);
+            Double ratin = (Double) tSInteres.getValueAt(Fila, 3);
+            String rating = String.valueOf(ratin);
+            String horario = tSInteres.getValueAt(Fila, 4).toString();
+            String web = (String) tSInteres.getValueAt(Fila, 5);
+            String nombre = (String) tSInteres.getValueAt(Fila, 6);
+            if((tel==null || tel.equals(""))&&(horario==null || horario.equals(""))&&(web==null || web.equals(""))){
+                fav=new Favoritos(imag, id, rating, nombre);  
+            }
+            else if((horario==null || horario.equals(""))&&(web==null || web.equals(""))){
+                fav=new Favoritos(imag, id, tel, rating, nombre);
+            }
+            else if((web==null || web.equals(""))){
+                fav=new Favoritos(imag, id, tel, rating, horario, nombre);
+            }
+            else {
+                fav=new Favoritos(imag, id, tel, rating, horario, web, nombre);
+            }
         }
-        String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};
-        String[] b = {"San Jose Costa Rica","Cartago Province,Cartago,Costa Rica"};
-        DistaciaMatrixApi l = new DistaciaMatrixApi();
-        try {
-            l.impDistancia(a, b, "Automóvil");
-        } catch (ApiException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        
+        String cadena = (String) tSInteres.getValueAt(Fila, 6);
+        int prioridad=0;
+        for(int i=0;i<=cadena.length();i++){
+        prioridad+=cadena.codePointAt(i);
         }
+        
+        System.out.println(fav.getNombre());
+        arbol.insertar(fav, prioridad);
+        
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        //arbol.;
+        //JOptionPane.showMessageDialog(null, "Seleccione un lugar")
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -728,6 +766,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

@@ -46,12 +46,15 @@ public class ArbolBinario<T> {
      * @param prioridad
      * @param latlng
      */
-    public ArbolBinario(T contenido, int prioridad, String[] latlng) {
+    public ArbolBinario(String[] latlng){
+        this.latlng = latlng;
+    }
+    public ArbolBinario(T contenido, int prioridad) {
         this.contenido = contenido;
         this.padre = new ANodoArbol(contenido, prioridad);
         this.izquierdo = null;
         this.derecho = null;
-        this.latlng = latlng;
+        this.latlng = null;
     }
     // Verificar si el arbol esta vacio
 
@@ -212,6 +215,22 @@ public class ArbolBinario<T> {
             preOrden(nodo.getDerecho());
         }
     }
+    
+    /*public void inOrden(ANodoArbol nodo){
+        if(nodo.getIzquierdo()!=null){
+            inOrden(nodo.getIzquierdo());
+        }
+        else if(nodo.getIzquierdo()==null){
+            System.out.println(nodo.getContenido());
+            
+            if(nodo.getDerecho()!=null){
+                inOrden(nodo.getDerecho());
+            }
+            else if(nodo.getDerecho()==null){
+                nodo.
+            }
+        }
+    }*/
 
     
     // Getters and setters de la funcion
