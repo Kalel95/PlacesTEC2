@@ -43,7 +43,7 @@ public class BD4O {
         
         
 	//metodo para editar objetos guardados
-	public void Modificar(Object obj,int Codigo,String Latitud, String Longitud, String Lugar, String medio, String dia, String mes, String año) {
+	public void Modificar(Object obj,String Codigo,String Latitud, String Longitud, String Lugar, String medio, String dia, String mes, String año) {
 		
 		ObjectSet resultado=ConsultarLugar(obj);
 		while(resultado.hasNext()) {

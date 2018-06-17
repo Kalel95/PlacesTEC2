@@ -48,7 +48,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         //Se ingresa la informacion de las tablas
-        tabla1.addColumn("ID");
+        tabla1.addColumn("Fecha");
         tabla1.addColumn("Locacion");
         tabla1.addColumn("Latitud");
         tabla1.addColumn("Longitud");
@@ -62,17 +62,7 @@ public class Principal extends javax.swing.JFrame {
         tablaruta.addColumn("Destino");
         tablaruta.addColumn("Llegada");
         jTable3.setModel(tablaruta);
-        for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
-            Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
-            String Dato[]=new String[4];
-            int ID=lu.getCodigo();
-            String id= String.valueOf(ID);
-            Dato[0]= id;
-            Dato[1]= lu.getLugar();
-            Dato[2]=lu.getLatitud();
-            Dato[3]=lu.getLongitud();
-            tabla1.addRow(Dato);
-        }
+        
         
         
         ApiPlaces completar = new ApiPlaces();
@@ -177,6 +167,7 @@ public class Principal extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -380,6 +371,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanel4.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
 
+        jButton10.setText("Actualizar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
+
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 710, 310));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -511,7 +510,7 @@ public class Principal extends javax.swing.JFrame {
                     String longitud = location.getLng().toString();
                     //int codigo=Integer.parseInt(jTextField8.getText());
                     //se crea un objeto tipo Constructor       
-                    Lugar persona=new Lugar(contador,latitud,longitud,jTextField4.getText(),jComboBox1.getSelectedItem().toString(),
+                    Lugar persona=new Lugar(jTextField8.getText(),latitud,longitud,jTextField4.getText(),jComboBox1.getSelectedItem().toString(),
                     jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
                     Basedatos.Insertar(persona);
                     JOptionPane.showMessageDialog(null,persona );
@@ -529,7 +528,7 @@ public class Principal extends javax.swing.JFrame {
                  String longitud = location.getLng().toString();
                  //int codigo=Integer.parseInt(jTextField8.getText());
                  //se crea un objeto tipo Constructor       
-                 Lugar persona=new Lugar(contador,latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
+                 Lugar persona=new Lugar(jTextField8.getText(),latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
                  jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
                  Basedatos.Insertar(persona);
                  JOptionPane.showMessageDialog(null,persona );
@@ -546,7 +545,7 @@ public class Principal extends javax.swing.JFrame {
             String latitud = jTextField1.getText();      
             String longitud = jTextField2.getText();
             //int codigo=Integer.parseInt(jTextField8.getText());
-            Lugar persona=new Lugar(contador,latitud,longitud,c.coordinateToLocation(h),jComboBox1.getSelectedItem().toString(),
+            Lugar persona=new Lugar(jTextField8.getText(),latitud,longitud,c.coordinateToLocation(h),jComboBox1.getSelectedItem().toString(),
                  jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
                  Basedatos.Insertar(persona);
                  JOptionPane.showMessageDialog(null,persona );
@@ -575,12 +574,12 @@ public class Principal extends javax.swing.JFrame {
         String longitud = (jTextField2.getText());       
         int codigo=Integer.parseInt(jTextField8.getText());
     
-        Basedatos.Modificar(new Lugar(codigo,null,null,null,null,
-               null,null,null), codigo,latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
+        Basedatos.Modificar(new Lugar(jTextField8.getText(),null,null,null,null,
+               null,null,null), jTextField8.getText(),latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
                jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
                 
 		System.out.println("\n*Aquí se hace un SELECT del usuario*");
-		ObjectSet resultado=Basedatos.ConsultarLugar(new Lugar(0,null,null,null,null,null,null,null));
+		ObjectSet resultado=Basedatos.ConsultarLugar(new Lugar(null,null,null,null,null,null,null,null));
 		while(resultado.hasNext()) {
 			System.out.println(resultado.next().toString());
                         
@@ -590,7 +589,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int codigo = Integer.parseInt(jTextField8.getText());
-        Basedatos.Borrar(new Lugar(codigo,null,null,null,null,null,null,null));		
+        Basedatos.Borrar(new Lugar(jTextField8.getText(),null,null,null,null,null,null,null));		
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -629,14 +628,17 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-            int codlugar = Integer.parseInt(jTextField11.getText());
-            Lugar lugar = (Lugar)Basedatos.ConsultarLugares().get(codlugar);
-            System.out.println(lugar);
-            
-            String Dato[]=new String[3];
-            Dato[0]=lugar.getLugar();
-            Dato[1]=lugar.getDia()+"/"+lugar.getMes()+"/"+lugar.getAño();
+            //int codlugar = Integer.parseInt(jTextField11.getText());
+            //Lugar lugar = (Lugar)Basedatos.ConsultarLugares().get(codlugar);
+            //System.out.println(lugar);
+            int fila=jTable1.getSelectedRow();
+            int colum=jTable1.getSelectedColumn();
+            String Dato[]=new String[2];
+            Dato[0]=(String) tabla1.getValueAt(fila,1);
+            Dato[1]=(String) tabla1.getValueAt(fila,0);
             tablaruta.addRow(Dato);
+           //System.out.println(tabla1.getValueAt(1,1));
+        
             /*for(int i=lugar;i<Basedatos.ConsultarLugares().size();i++) {
                 if(lugar== lu){
                 
@@ -660,6 +662,25 @@ public class Principal extends javax.swing.JFrame {
             jComboBox2.getSelectedItem().toString());
         }
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        int filas=tabla1.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                tabla1.removeRow(0);
+            } 
+        
+        for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
+            Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
+            String Dato[]=new String[4];
+            String ID=lu.getDia()+"/"+lu.getMes()+"/"+lu.getAño();
+            String id= String.valueOf(ID);
+            Dato[0]= id;
+            Dato[1]= lu.getLugar();
+            Dato[2]=lu.getLatitud();
+            Dato[3]=lu.getLongitud();
+            tabla1.addRow(Dato);
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -692,6 +713,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
