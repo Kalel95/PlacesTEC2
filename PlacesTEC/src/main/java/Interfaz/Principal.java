@@ -6,13 +6,18 @@
 package Interfaz;
 
 import PlacesTEC.capalogica.Api.ApiPlaces;
+import PlacesTEC.capalogica.Api.DistaciaMatrixApi;
 import PlacesTEC.capalogica.Api.GoogleGeocoderService;
+import PlacesTEC.capalogica.Estructuras.ANodoArbol;
+import PlacesTEC.capalogica.Estructuras.ArbolBinario;
+import PlacesTEC.capalogica.Estructuras.Favoritos;
 import PlacesTEC.capalogica.Estructuras.Lugar;
 import PlacesTEC.capalogica.logica.BD4O;
 import com.db4o.ObjectSet;
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.model.GeocoderGeometry;
 import com.google.code.geocoder.model.LatLng;
+import com.google.maps.errors.ApiException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +26,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -44,11 +50,12 @@ public class Principal extends javax.swing.JFrame {
     static Lugar usuarios;
     //ObjectSet resultado;
     static String x="";
+    static ArbolBinario arbol;
     
     public Principal() {
         initComponents();
         //Se ingresa la informacion de las tablas
-        tabla1.addColumn("ID");
+        tabla1.addColumn("Fecha");
         tabla1.addColumn("Locacion");
         tabla1.addColumn("Latitud");
         tabla1.addColumn("Longitud");
@@ -58,13 +65,15 @@ public class Principal extends javax.swing.JFrame {
         tSInteres.addColumn("Ratin");
         tSInteres.addColumn("Horario");
         tSInteres.addColumn("Web");
+        tSInteres.addColumn("Nombre");
         tablaruta.addColumn("Destino");
         tablaruta.addColumn("Llegada");
         jTable3.setModel(tablaruta);
+        
         for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
             Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
             String Dato[]=new String[4];
-            int ID=lu.getCodigo();
+            String ID=lu.getDia()+"/"+lu.getMes()+"/"+lu.getAño();
             String id= String.valueOf(ID);
             Dato[0]= id;
             Dato[1]= lu.getLugar();
@@ -72,13 +81,12 @@ public class Principal extends javax.swing.JFrame {
             Dato[3]=lu.getLongitud();
             tabla1.addRow(Dato);
         }
-        
-        
-        ApiPlaces completar = new ApiPlaces();
-        String x=jTextField4.getText();
+        ApiPlaces completar = new ApiPlaces();       
         ArrayList resp=completar.AutoCompletado("san");
         AutoCompletar= new TextAutoCompleter( jTextField4 );
         AutoCompletar.addItems(resp);
+        
+        
         
         //Se inician las tablas con la informacion ya establesida
         jTable1.setModel(tabla1);
@@ -104,7 +112,7 @@ public class Principal extends javax.swing.JFrame {
         System.out.println(Arrays.deepToString(places.toArray()));
         for(int i=0; i<num; i++) {
             Place place = places.get(i).getDetails();
-            Object[] fila = new Object[6];
+            Object[] fila = new Object[7];
             try{
                 //ImageIcon icono=new ImageIcon(place.getIconImage());
                 fila[0]= new JLabel(new ImageIcon(getClass().getResource("/Desktop/tiger-1526704_960_720.png")));  
@@ -115,6 +123,7 @@ public class Principal extends javax.swing.JFrame {
             fila[3]= place.getRating();
             fila[4]= place.getHours();
             fila[5]= place.getWebsite();
+            fila[6]= place.getName();
             //System.out.println(place.getPhotos().get(i).getImage().toString());
             System.out.println("Lat: " + place.getWebsite());
             System.out.println("Long: " + place.getLongitude());
@@ -160,7 +169,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
-        jTextField9 = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jTextField10 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -174,12 +182,16 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        jButton11 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1350, 700));
@@ -276,7 +288,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 80, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Bus", "Automóvil", "Avión", "Caminado" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Bicicleta", "Automóvil", "Caminando" }));
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 80, -1));
 
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -298,10 +310,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, -1, -1));
 
-        jTextField9.setText("jTextField9");
-        jPanel2.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, -1, -1));
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 500, 180));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 500, 180));
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel4.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 60, -1));
@@ -316,7 +325,7 @@ public class Principal extends javax.swing.JFrame {
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, -1, -1));
+        jPanel4.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 100, 30));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "restaurant", "cinema", "doctor", "museum", "bar" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -364,12 +373,28 @@ public class Principal extends javax.swing.JFrame {
         jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane2.setViewportView(jTable2);
 
-        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 420, 150));
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 550, 150));
 
         jLabel14.setText("Sitios de interes:");
         jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, -1, -1));
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 710, 310));
+        jButton9.setText("AgregarFav");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 90, 30));
+
+        jButton10.setText("Consulta");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 90, 30));
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 710, 380));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -386,13 +411,15 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTable3);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 500, 190));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 500, 190));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 520, 260));
-
-        jLabel15.setText("Destinos");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, -1, -1));
-        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 80, -1));
+        jButton11.setText("Calcular");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 80, 30));
 
         jButton7.setText("Agregar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -400,7 +427,21 @@ public class Principal extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, -1, -1));
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 80, 30));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 520, 260));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel16.setText("Lugares de Destino");
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 240, 30));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel17.setText("Sitios de Interes");
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 20, -1, -1));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel18.setText("Ruta de Viaje");
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -500,7 +541,7 @@ public class Principal extends javax.swing.JFrame {
                     String longitud = location.getLng().toString();
                     //int codigo=Integer.parseInt(jTextField8.getText());
                     //se crea un objeto tipo Constructor       
-                    Lugar persona=new Lugar(contador,latitud,longitud,jTextField4.getText(),jComboBox1.getSelectedItem().toString(),
+                    Lugar persona=new Lugar(jTextField8.getText(),latitud,longitud,jTextField4.getText(),jComboBox1.getSelectedItem().toString(),
                     jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
                     Basedatos.Insertar(persona);
                     JOptionPane.showMessageDialog(null,persona );
@@ -518,7 +559,7 @@ public class Principal extends javax.swing.JFrame {
                  String longitud = location.getLng().toString();
                  //int codigo=Integer.parseInt(jTextField8.getText());
                  //se crea un objeto tipo Constructor       
-                 Lugar persona=new Lugar(contador,latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
+                 Lugar persona=new Lugar(jTextField8.getText(),latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
                  jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
                  Basedatos.Insertar(persona);
                  JOptionPane.showMessageDialog(null,persona );
@@ -535,7 +576,7 @@ public class Principal extends javax.swing.JFrame {
             String latitud = jTextField1.getText();      
             String longitud = jTextField2.getText();
             //int codigo=Integer.parseInt(jTextField8.getText());
-            Lugar persona=new Lugar(contador,latitud,longitud,c.coordinateToLocation(h),jComboBox1.getSelectedItem().toString(),
+            Lugar persona=new Lugar(jTextField8.getText(),latitud,longitud,c.coordinateToLocation(h),jComboBox1.getSelectedItem().toString(),
                  jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
                  Basedatos.Insertar(persona);
                  JOptionPane.showMessageDialog(null,persona );
@@ -546,7 +587,23 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
                          
-		}                                             
+		} 
+        int filas=tabla1.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                tabla1.removeRow(0);
+            } 
+        
+        for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
+            Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
+            String Dato[]=new String[4];
+            String ID=lu.getDia()+"/"+lu.getMes()+"/"+lu.getAño();
+            String id= String.valueOf(ID);
+            Dato[0]= id;
+            Dato[1]= lu.getLugar();
+            Dato[2]=lu.getLatitud();
+            Dato[3]=lu.getLongitud();
+            tabla1.addRow(Dato);
+        }
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
@@ -564,12 +621,12 @@ public class Principal extends javax.swing.JFrame {
         String longitud = (jTextField2.getText());       
         int codigo=Integer.parseInt(jTextField8.getText());
     
-        Basedatos.Modificar(new Lugar(codigo,null,null,null,null,
-               null,null,null), codigo,latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
+        Basedatos.Modificar(new Lugar(jTextField8.getText(),null,null,null,null,
+               null,null,null), jTextField8.getText(),latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
                jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
                 
 		System.out.println("\n*Aquí se hace un SELECT del usuario*");
-		ObjectSet resultado=Basedatos.ConsultarLugar(new Lugar(0,null,null,null,null,null,null,null));
+		ObjectSet resultado=Basedatos.ConsultarLugar(new Lugar(null,null,null,null,null,null,null,null));
 		while(resultado.hasNext()) {
 			System.out.println(resultado.next().toString());
                         
@@ -579,7 +636,23 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int codigo = Integer.parseInt(jTextField8.getText());
-        Basedatos.Borrar(new Lugar(codigo,null,null,null,null,null,null,null));		
+        Basedatos.Borrar(new Lugar(jTextField8.getText(),null,null,null,null,null,null,null));
+        int filas=tabla1.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                tabla1.removeRow(0);
+            } 
+        
+        for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
+            Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
+            String Dato[]=new String[4];
+            String ID=lu.getDia()+"/"+lu.getMes()+"/"+lu.getAño();
+            String id= String.valueOf(ID);
+            Dato[0]= id;
+            Dato[1]= lu.getLugar();
+            Dato[2]=lu.getLatitud();
+            Dato[3]=lu.getLongitud();
+            tabla1.addRow(Dato);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -606,10 +679,12 @@ public class Principal extends javax.swing.JFrame {
         int Fila=jTable1.getSelectedRow();
         if (Fila==-1) JOptionPane.showMessageDialog(null, "Seleccione una locacion");
         else if(Fila>=0){
-            InfSInteres(Double.parseDouble((String)jTable1.getValueAt(Fila, 1)), 
-            Double.parseDouble((String)jTable1.getValueAt(Fila, 2)), Integer.parseInt(jTextField10.getText()), 
+            InfSInteres(Double.parseDouble((String)jTable1.getValueAt(Fila, 2)), 
+            Double.parseDouble((String)jTable1.getValueAt(Fila, 3)), Integer.parseInt(jTextField10.getText()), 
             jComboBox2.getSelectedItem().toString());
         }
+        String[] latitudLong={String.valueOf(jTable1.getValueAt(Fila, 2)),String.valueOf(jTable1.getValueAt(Fila, 3))};
+        arbol=new ArbolBinario(latitudLong);
         
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -618,26 +693,112 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-            int codlugar = Integer.parseInt(jTextField11.getText());
-            Lugar lugar = (Lugar)Basedatos.ConsultarLugares().get(codlugar);
-            System.out.println(lugar);
+            //int codlugar = Integer.parseInt(jTextField11.getText());
+            //Lugar lugar = (Lugar)Basedatos.ConsultarLugares().get(codlugar);
+            //System.out.println(lugar);
+            int fila=jTable1.getSelectedRow();           
+            String Dato[]=new String[2];
+            Dato[0]=(String) tabla1.getValueAt(fila,1);
+            Dato[1]=(String) tabla1.getValueAt(fila,0);
+            tablaruta.addRow(Dato);
             
-            String Dato[]=new String[3];
-            Dato[0]=lugar.getLugar();
-            Dato[1]=lugar.getDia()+"/"+lugar.getMes()+"/"+lugar.getAño();
-            tablaruta.addRow(Dato);
-            /*for(int i=lugar;i<Basedatos.ConsultarLugares().size();i++) {
-                if(lugar== lu){
-                
-            //Lugar lu = (Lugar)Basedatos.ConsultarLugar(new Lugar(2,null,null,null,null,null,null,null));
-            String Dato[]=new String[3];
-            Dato[0]= lu.getLugar();
-            Dato[1]=lu.getLatitud();
-            Dato[2]=lu.getLongitud();
-            tablaruta.addRow(Dato);
-            }
-            }*/
+        
+        
+           
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        Favoritos fav=null;
+        int Fila=jTable2.getSelectedRow();
+        int Fila1=jTable1.getSelectedRow();
+        if (Fila==-1) JOptionPane.showMessageDialog(null, "Seleccione un lugar");
+        else if(Fila>=0){
+            JLabel image =  (JLabel) tSInteres.getValueAt(Fila, 0);
+            String imag = image.getText();
+            String id = (String) tSInteres.getValueAt(Fila, 1);
+            String tel = (String) tSInteres.getValueAt(Fila, 2);
+            Double ratin = (Double) tSInteres.getValueAt(Fila, 3);
+            String rating = String.valueOf(ratin);
+            String horario = tSInteres.getValueAt(Fila, 4).toString();
+            String web = (String) tSInteres.getValueAt(Fila, 5);
+            String nombre = (String) tSInteres.getValueAt(Fila, 6);
+            if((tel==null || tel.equals(""))&&(horario==null || horario.equals(""))&&(web==null || web.equals(""))){
+                fav=new Favoritos(imag, id, rating, nombre);  
+            }
+            else if((horario==null || horario.equals(""))&&(web==null || web.equals(""))){
+                fav=new Favoritos(imag, id, tel, rating, nombre);
+            }
+            else if((web==null || web.equals(""))){
+                fav=new Favoritos(imag, id, tel, rating, horario, nombre);
+            }
+            else {
+                fav=new Favoritos(imag, id, tel, rating, horario, web, nombre);
+            }
+        }
+        
+        String cadena = (String) tSInteres.getValueAt(Fila, 6);
+        cadena=cadena.replaceAll("\\s","");
+        System.out.println(cadena);
+        int prioridad=0;
+        for(int i=0;i<=cadena.length()-1;i++){
+        prioridad+=cadena.codePointAt(i);
+        }
+        
+        System.out.println(fav.getNombre());
+        System.out.println(prioridad);
+        arbol.insertar(fav, prioridad);
+        
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        String nombres="";
+        ANodoArbol nodo = arbol.getRaiz();
+        ArrayList aray=arbol.inOrden(nodo);
+        Favoritos fav=null;
+        System.out.println(aray.size()-1);
+        for(int i=0;i<aray.size()-1;i++){
+            fav=(Favoritos) aray.get(i);
+            System.out.println("Nombre: ");
+            System.out.println("Nombre: "+fav.getNombre());
+            nombres= nombres+fav.getNombre()+",";
+        }
+        
+        JOptionPane.showMessageDialog(null, nombres);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};       
+        String[] b = {"San Jose Costa Rica","Cartago Province,Cartago,Costa Rica"};
+        String[] result = Stream.of(a, b).flatMap(Stream::of).toArray(String[]::new);
+        System.out.println(Arrays.toString(result));
+        String[] p = {};       
+        String[] q = {};
+        int filas = tablaruta.getRowCount();
+        int Fila=jTable3.getSelectedRow();
+        System.out.println(filas);
+        int i=0;
+        /*while(i<=filas){
+            String lugar=(String) tablaruta.getValueAt(Fila,1);
+            System.out.println(lugar);
+        String[] result = Stream.of(a, b).flatMap(Stream::of).toArray(String[]::new);
+        System.out.println(Arrays.toString(result));
+            
+        }*/
+        DistaciaMatrixApi l = new DistaciaMatrixApi();
+        try {
+            ArrayList w=l.impDistancia(a, b, "Automóvil");
+            JOptionPane.showMessageDialog(null,w);
+            return;
+        } catch (ApiException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -670,6 +831,8 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -677,6 +840,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -685,7 +849,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -706,7 +872,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -714,6 +879,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,6 +15,7 @@ import com.google.maps.model.TravelMode;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,16 +24,16 @@ import java.util.regex.Pattern;
  * @author Kenneth
  */
 public class DistaciaMatrixApi {
-    public void impDistancia(String[] origenes, String[] destinos, String modoViaje) throws ApiException, InterruptedException, IOException {
+    public ArrayList impDistancia(String[] origenes, String[] destinos, String modoViaje) throws ApiException, InterruptedException, IOException {
         TravelMode modoDeViaje = null;
         if (null!=modoViaje) switch (modoViaje) {
-            case "Carro":
+            case "Automóvil":
                 modoDeViaje=TravelMode.DRIVING;
                 break;
             case "Bicicleta":
                 modoDeViaje=TravelMode.BICYCLING;
                 break;
-            case "A pie":
+            case "Caminando":
                 modoDeViaje=TravelMode.WALKING;
                 break;
             default:
@@ -45,7 +46,8 @@ public class DistaciaMatrixApi {
 		DistanceMatrixApiRequest req=DistanceMatrixApi.newRequest(context);
 		DistanceMatrix t=req.origins(origenes).destinations(destinos).mode(modoDeViaje).await();
 		//long[][] array=new long[origins.length][destinations.length];
-            for(int i=0;i<origenes.length;i++){
+            ArrayList<Double> resp = new ArrayList<Double>();
+               for(int i=0;i<origenes.length;i++){
                 for(int j=0;j<destinos.length;j++){
                     String z = null;
                
@@ -56,10 +58,13 @@ public class DistaciaMatrixApi {
 			String remplazado=m.replaceAll("");
                         Double a = Double.parseDouble(remplazado);
 			System.out.println(a);
+                        resp.add(a);
 		}
                     
                 }
             }
+                System.out.println(resp);
+        return resp;
     }
     
 }

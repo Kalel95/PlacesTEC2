@@ -5,6 +5,8 @@
  */
 package PlacesTEC.capalogica.Estructuras;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Joan
@@ -15,8 +17,9 @@ public class ArbolBinario<T> {
     private T contenido; 
     private ANodoArbol<T> raiz;
     private ANodoArbol<T> padre;
-    private ANodoArbol<T> izquierdo;
-    private ANodoArbol<T> derecho;
+    private ArbolBinario<T> izquierdo;
+    private ArbolBinario<T> derecho;
+    private String[] latlng;
     
     //Constructores
     
@@ -43,12 +46,17 @@ public class ArbolBinario<T> {
      *
      * @param contenido
      * @param prioridad
+     * @param latlng
      */
+    public ArbolBinario(String[] latlng){
+        this.latlng = latlng;
+    }
     public ArbolBinario(T contenido, int prioridad) {
         this.contenido = contenido;
         this.padre = new ANodoArbol(contenido, prioridad);
         this.izquierdo = null;
         this.derecho = null;
+        this.latlng = null;
     }
     // Verificar si el arbol esta vacio
 
@@ -81,6 +89,8 @@ public class ArbolBinario<T> {
         ANodoArbol nuevo = new ANodoArbol(contenido, prioridad);
         if (raiz ==  null){
             raiz = nuevo;
+            izquierdo = new ArbolBinario();
+            derecho = new ArbolBinario();
         }else{
             ANodoArbol aux = raiz;
             while(true){
@@ -209,6 +219,16 @@ public class ArbolBinario<T> {
             preOrden(nodo.getDerecho());
         }
     }
+    
+    public ArrayList inOrden(ANodoArbol nodo){
+        ArrayList aray = new ArrayList();
+        if(nodo!=null){
+            inOrden(nodo.getIzquierdo());
+            aray.add(nodo.getContenido());
+            inOrden(nodo.getDerecho());
+        }
+        return aray;
+    }
 
     
     // Getters and setters de la funcion
@@ -249,7 +269,7 @@ public class ArbolBinario<T> {
      *
      * @return
      */
-    public ANodoArbol<T> getIzquierdo() {
+    public ArbolBinario<T> getIzquierdo() {
         return izquierdo;
     }
 
@@ -257,7 +277,7 @@ public class ArbolBinario<T> {
      *
      * @param izquierdo
      */
-    public void setIzquierdo(ANodoArbol<T> izquierdo) {
+    public void setIzquierdo(ArbolBinario<T> izquierdo) {
         this.izquierdo = izquierdo;
     }
 
@@ -265,7 +285,7 @@ public class ArbolBinario<T> {
      *
      * @return
      */
-    public ANodoArbol<T> getDerecho() {
+    public ArbolBinario<T> getDerecho() {
         return derecho;
     }
 
@@ -273,7 +293,7 @@ public class ArbolBinario<T> {
      *
      * @param derecho
      */
-    public void setDerecho(ANodoArbol<T> derecho) {
+    public void setDerecho(ArbolBinario<T> derecho) {
         this.derecho = derecho;
     }
 

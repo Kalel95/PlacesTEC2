@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * @author Joel
  */
 public class Lugar {
-    private int Codigo;
+    private String Codigo;
     private String Latitud;
     private String Longitud;
     private String Lugar;
@@ -21,7 +21,7 @@ public class Lugar {
     private String mes;
     private String año;
 
-    public Lugar(int Codigo,String Latitud, String Longitud, String Lugar, String medio, String dia, String mes, String año) {
+    public Lugar(String Codigo,String Latitud, String Longitud, String Lugar, String medio, String dia, String mes, String año) {
         this.Codigo = Codigo;
         this.Latitud = Latitud;
         this.Longitud = Longitud;
@@ -91,7 +91,7 @@ public class Lugar {
     public void setAño(String año) {
         this.año = año;
     }
-    public int getCodigo() {
+    public String getCodigo() {
         return Codigo;
     }
 
@@ -108,7 +108,7 @@ public class Lugar {
 				
 	return Dato;
 	}
-    public void modificarLugar(int Codigo,String Latitud, String Longitud, String Lugar, String medio, String dia, String mes, String año) {
+    public void modificarLugar(String Codigo,String Latitud, String Longitud, String Lugar, String medio, String dia, String mes, String año) {
 	this.Codigo = Codigo;
         this.Latitud = Latitud;
         this.Longitud = Longitud;
