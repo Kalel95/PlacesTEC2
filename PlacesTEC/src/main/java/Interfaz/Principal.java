@@ -859,7 +859,7 @@ public class Principal extends javax.swing.JFrame {
         aray=arbol.inOrden(nodo,aray);
         Favoritos fav=null;
         System.out.println(aray.size()-1);
-        for(int i=0;i<aray.size()-1;i++){
+        for(int i=0;i<aray.size();i++){
             fav=(Favoritos) aray.get(i);
             System.out.println("Nombre: ");
             System.out.println("Nombre: "+fav.getNombre());

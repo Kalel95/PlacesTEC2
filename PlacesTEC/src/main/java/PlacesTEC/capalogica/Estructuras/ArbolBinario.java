@@ -89,8 +89,8 @@ public class ArbolBinario<T> {
         ANodoArbol nuevo = new ANodoArbol(contenido, prioridad);
         if (raiz ==  null){
             raiz = nuevo;
-            izquierdo = new ANodoArbol();
-            derecho = new ANodoArbol();
+            izquierdo=new ANodoArbol<>();
+            derecho=new ANodoArbol<>();
         }else{
             ANodoArbol aux = raiz;
             while(true){
