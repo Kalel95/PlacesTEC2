@@ -8,6 +8,7 @@ package Interfaz;
 import PlacesTEC.capalogica.Api.ApiPlaces;
 import PlacesTEC.capalogica.Api.DistaciaMatrixApi;
 import PlacesTEC.capalogica.Api.GoogleGeocoderService;
+import PlacesTEC.capalogica.Estructuras.ANodoArbol;
 import PlacesTEC.capalogica.Estructuras.ArbolBinario;
 import PlacesTEC.capalogica.Estructuras.Favoritos;
 import PlacesTEC.capalogica.Estructuras.Lugar;
@@ -737,20 +738,34 @@ public class Principal extends javax.swing.JFrame {
         }
         
         String cadena = (String) tSInteres.getValueAt(Fila, 6);
+        cadena=cadena.replaceAll("\\s","");
+        System.out.println(cadena);
         int prioridad=0;
-        for(int i=0;i<=cadena.length();i++){
+        for(int i=0;i<=cadena.length()-1;i++){
         prioridad+=cadena.codePointAt(i);
         }
         
         System.out.println(fav.getNombre());
+        System.out.println(prioridad);
         arbol.insertar(fav, prioridad);
         
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
-        //arbol.;
-        //JOptionPane.showMessageDialog(null, "Seleccione un lugar")
+        String nombres="";
+        ANodoArbol nodo = arbol.getRaiz();
+        ArrayList aray=arbol.inOrden(nodo);
+        Favoritos fav=null;
+        System.out.println(aray.size()-1);
+        for(int i=0;i<aray.size()-1;i++){
+            fav=(Favoritos) aray.get(i);
+            System.out.println("Nombre: ");
+            System.out.println("Nombre: "+fav.getNombre());
+            nombres= nombres+fav.getNombre()+",";
+        }
+        
+        JOptionPane.showMessageDialog(null, nombres);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
