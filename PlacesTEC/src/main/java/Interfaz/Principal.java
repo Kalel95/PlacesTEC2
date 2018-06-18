@@ -69,7 +69,7 @@ public class Principal extends javax.swing.JFrame {
         tablaruta.addColumn("Destino");
         tablaruta.addColumn("Llegada");
         jTable3.setModel(tablaruta);
-        
+        //Se muestran en la tabla 2 los lugares guardados
         for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
             Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
             String Dato[]=new String[4];
@@ -81,6 +81,7 @@ public class Principal extends javax.swing.JFrame {
             Dato[3]=lu.getLongitud();
             tabla1.addRow(Dato);
         }
+        //metodo para buscar lugares mediante el autocompletado-sin ingresar la palabra completa
         ApiPlaces completar = new ApiPlaces();       
         ArrayList resp=completar.AutoCompletado("san");
         AutoCompletar= new TextAutoCompleter( jTextField4 );
@@ -460,7 +461,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Geocoder d = new Geocoder();
-            GoogleGeocoderService c = new GoogleGeocoderService(d);
+        GoogleGeocoderService c = new GoogleGeocoderService(d);
         try {
             //validar que los jtextfield no esten vacíos
           if((jTextField1.getText() == null || jTextField1.getText().equals(""))||
@@ -588,11 +589,12 @@ public class Principal extends javax.swing.JFrame {
         }
                          
 		} 
+        //eliminar las filas de la jtable1
         int filas=tabla1.getRowCount();
             for (int i = 0;filas>i; i++) {
                 tabla1.removeRow(0);
             } 
-        
+        //actualizar la informacion que se muetra 
         for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
             Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
             String Dato[]=new String[4];
@@ -604,6 +606,7 @@ public class Principal extends javax.swing.JFrame {
             Dato[3]=lu.getLongitud();
             tabla1.addRow(Dato);
         }
+        //vaciar los texfield
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
@@ -617,31 +620,128 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String latitud = (jTextField1.getText());
-        String longitud = (jTextField2.getText());       
-        int codigo=Integer.parseInt(jTextField8.getText());
-    
-        Basedatos.Modificar(new Lugar(jTextField8.getText(),null,null,null,null,
-               null,null,null), jTextField8.getText(),latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
-               jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
-                
-		System.out.println("\n*Aquí se hace un SELECT del usuario*");
-		ObjectSet resultado=Basedatos.ConsultarLugar(new Lugar(null,null,null,null,null,null,null,null));
-		while(resultado.hasNext()) {
-			System.out.println(resultado.next().toString());
-                        
-		}
-                
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
         int codigo = Integer.parseInt(jTextField8.getText());
         Basedatos.Borrar(new Lugar(jTextField8.getText(),null,null,null,null,null,null,null));
+        //validar que los jtextfield no esten vacíos
+        if(/*(jTextField1.getText() == null || jTextField1.getText().equals(""))||
+                (jTextField2.getText() == null || jTextField2.getText().equals(""))||
+                (jTextField3.getText() == null || jTextField3.getText().equals(""))||*/
+                (jComboBox1.getSelectedIndex() <1 || jComboBox1.getSelectedItem().toString()=="Seleccionar")||
+                (jTextField5.getText() == null || jTextField5.getText().equals(""))||
+                (jTextField6.getText() == null || jTextField6.getText().equals(""))||
+                (jTextField7.getText() == null || jTextField7.getText().equals(""))||
+                (jTextField8.getText() == null || jTextField7.getText().equals(""))){
+            JOptionPane.showMessageDialog(null,"Debe completar los espacios vacios");
+        }
+        else{                   
+            Geocoder d = new Geocoder();
+            GoogleGeocoderService c = new GoogleGeocoderService(d);
+        try {
+            //validar que los jtextfield no esten vacíos
+          if((jTextField1.getText() == null || jTextField1.getText().equals(""))||
+         (jTextField2.getText() == null || jTextField2.getText().equals(""))){
+              
+              if((jTextField3.getText() == null || jTextField3.getText().equals(""))){
+                  if(jTextField4.getText()==null|| jTextField4.getText().equals("")){
+                      JOptionPane.showMessageDialog(null,"Debe completar la latitud y longitud o la dirección ");
+                  }
+                  else{
+                      LatLng location = c.locationToCoordinate(jTextField4.getText()).getLocation();
+                    //System.out.println("La latitud es = " + location.getLat() + "\nLa longitud es = " + location.getLng());         
+                    //JOptionPane.showMessageDialog(null,"La latitud es = " + location.getLat() + "\nLa longitud es = " + 
+                    //location.getLng());
+                  
+                    String latitud = location.getLat().toString();      
+                    String longitud = location.getLng().toString();
+                    //int codigo=Integer.parseInt(jTextField8.getText());
+                    //se crea un objeto tipo Constructor       
+                    Lugar persona=new Lugar(jTextField8.getText(),latitud,longitud,jTextField4.getText(),jComboBox1.getSelectedItem().toString(),
+                    jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
+                    Basedatos.Insertar(persona);
+                    JOptionPane.showMessageDialog(null,persona );
+                    contador++;
+                  }
+                  
+              }
+              else{
+                 LatLng location = c.locationToCoordinate(jTextField3.getText()).getLocation();
+                 //System.out.println("La latitud es = " + location.getLat() + "\nLa longitud es = " + location.getLng());         
+                 //JOptionPane.showMessageDialog(null,"La latitud es = " + location.getLat() + "\nLa longitud es = " + 
+                 //location.getLng());
+                  
+                 String latitud = location.getLat().toString();      
+                 String longitud = location.getLng().toString();
+                 //int codigo=Integer.parseInt(jTextField8.getText());
+                 //se crea un objeto tipo Constructor       
+                 Lugar persona=new Lugar(jTextField8.getText(),latitud,longitud,jTextField3.getText(),jComboBox1.getSelectedItem().toString(),
+                 jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
+                 Basedatos.Insertar(persona);
+                 JOptionPane.showMessageDialog(null,persona );
+                 contador++;
+              }
+           }
+           else if((jTextField3.getText() == null || jTextField3.getText().equals(""))){
+               if((jTextField1.getText()) != null ||(jTextField2.getText() == null )){
+            GeocoderGeometry h = new GeocoderGeometry();
+            LatLng j = new LatLng(jTextField1.getText(), jTextField2.getText());
+            h.setLocation(j);
+            System.out.println(c.coordinateToLocation(h));
+                        
+            String latitud = jTextField1.getText();      
+            String longitud = jTextField2.getText();
+            //int codigo=Integer.parseInt(jTextField8.getText());
+            Lugar persona=new Lugar(jTextField8.getText(),latitud,longitud,c.coordinateToLocation(h),jComboBox1.getSelectedItem().toString(),
+                 jTextField5.getText(),jTextField6.getText(),jTextField7.getText());
+                 Basedatos.Insertar(persona);
+                 JOptionPane.showMessageDialog(null,persona );
+                 contador++;
+               }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                         
+		} 
+        //eliminar las filas de la jtable1
         int filas=tabla1.getRowCount();
             for (int i = 0;filas>i; i++) {
                 tabla1.removeRow(0);
             } 
-        
+        //actualizar la informacion que se muetra 
+        for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
+            Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
+            String Dato[]=new String[4];
+            String ID=lu.getDia()+"/"+lu.getMes()+"/"+lu.getAño();
+            String id= String.valueOf(ID);
+            Dato[0]= id;
+            Dato[1]= lu.getLugar();
+            Dato[2]=lu.getLatitud();
+            Dato[3]=lu.getLongitud();
+            tabla1.addRow(Dato);
+        }
+        //vaciar los textfield
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jComboBox1.setSelectedIndex(0);
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+                
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        //eliminar el objeto de la base de datos por medio de su codigo ID
+        int codigo = Integer.parseInt(jTextField8.getText());
+        Basedatos.Borrar(new Lugar(jTextField8.getText(),null,null,null,null,null,null,null));
+        //Eliminar filas de la jtable1
+        int filas=tabla1.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                tabla1.removeRow(0);
+            } 
+        //actualizar la informacio que se muestra en jtable1
         for(int i=0;i<Basedatos.ConsultarLugares().size();i++) {
             Lugar lu = (Lugar)Basedatos.ConsultarLugares().get(i);
             String Dato[]=new String[4];
