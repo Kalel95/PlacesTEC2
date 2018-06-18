@@ -190,6 +190,7 @@ public class Principal extends javax.swing.JFrame {
         jTable3 = new javax.swing.JTable();
         jButton11 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jComboBox3 = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -429,6 +430,9 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 80, 30));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Automóvil", "Caminando" }));
+        jPanel1.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 80, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 520, 260));
 
@@ -870,26 +874,24 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        String[] a = {"Cartago Province,Cartago,Costa Rica","San Jose Costa Rica"};       
-        String[] b = {"San Jose Costa Rica","Cartago Province,Cartago,Costa Rica"};
-        String[] result = Stream.of(a, b).flatMap(Stream::of).toArray(String[]::new);
-        System.out.println(Arrays.toString(result));
-        String[] p = {};       
-        String[] q = {};
-        int filas = tablaruta.getRowCount();
-        int Fila=jTable3.getSelectedRow();
-        System.out.println(filas);
-        int i=0;
-        /*while(i<=filas){
-            String lugar=(String) tablaruta.getValueAt(Fila,1);
-            System.out.println(lugar);
-        String[] result = Stream.of(a, b).flatMap(Stream::of).toArray(String[]::new);
-        System.out.println(Arrays.toString(result));
+        int fila=jTable3.getSelectedRow();           
             
-        }*/
+            
+            String dest2=(String) tablaruta.getValueAt(fila,0);
+            String[] destino = {dest2};       
+                                    
+            String[] actual = {"Cartago Province,Cartago,Costa Rica"};       
+            String[] b = {"San Jose Costa Rica","Cartago Province,Cartago,Costa Rica"};
+            String[] result = Stream.of(actual, b).flatMap(Stream::of).toArray(String[]::new);
+            //System.out.println(Arrays.toString(result));
+            String medio = (String) jComboBox3.getSelectedItem();
+            int filas = tablaruta.getRowCount();
+            int Fila=jTable3.getSelectedRow();
+            //System.out.println("Filas  "+filas);
+            
         DistaciaMatrixApi l = new DistaciaMatrixApi();
         try {
-            ArrayList w=l.impDistancia(a, b, "Automóvil");
+            ArrayList w=l.impDistancia(actual, destino, medio);
             JOptionPane.showMessageDialog(null,w);
             return;
         } catch (ApiException ex) {
@@ -944,6 +946,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
