@@ -755,7 +755,8 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nombres="";
         ANodoArbol nodo = arbol.getRaiz();
-        ArrayList aray=arbol.inOrden(nodo);
+        ArrayList<Favoritos> aray=new ArrayList<>();
+        aray=arbol.inOrden(nodo,aray);
         Favoritos fav=null;
         System.out.println(aray.size()-1);
         for(int i=0;i<aray.size()-1;i++){

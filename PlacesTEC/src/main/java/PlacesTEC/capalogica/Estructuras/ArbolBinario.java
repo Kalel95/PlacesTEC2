@@ -17,8 +17,8 @@ public class ArbolBinario<T> {
     private T contenido; 
     private ANodoArbol<T> raiz;
     private ANodoArbol<T> padre;
-    private ArbolBinario<T> izquierdo;
-    private ArbolBinario<T> derecho;
+    private ANodoArbol<T> izquierdo;
+    private ANodoArbol<T> derecho;
     private String[] latlng;
     
     //Constructores
@@ -89,8 +89,8 @@ public class ArbolBinario<T> {
         ANodoArbol nuevo = new ANodoArbol(contenido, prioridad);
         if (raiz ==  null){
             raiz = nuevo;
-            izquierdo = new ArbolBinario();
-            derecho = new ArbolBinario();
+            izquierdo = new ANodoArbol();
+            derecho = new ANodoArbol();
         }else{
             ANodoArbol aux = raiz;
             while(true){
@@ -220,13 +220,13 @@ public class ArbolBinario<T> {
         }
     }
     
-    public ArrayList inOrden(ANodoArbol nodo){
-        ArrayList aray = new ArrayList();
+    public ArrayList<Favoritos> inOrden(ANodoArbol nodo, ArrayList<Favoritos> aray){
         if(nodo!=null){
-            inOrden(nodo.getIzquierdo());
-            aray.add(nodo.getContenido());
-            inOrden(nodo.getDerecho());
+            inOrden(nodo.getIzquierdo(), aray);
+            aray.add((Favoritos) nodo.getContenido());
+            inOrden(nodo.getDerecho(), aray);
         }
+        System.out.println(aray.size());
         return aray;
     }
 
@@ -269,7 +269,7 @@ public class ArbolBinario<T> {
      *
      * @return
      */
-    public ArbolBinario<T> getIzquierdo() {
+    public ANodoArbol<T> getIzquierdo() {
         return izquierdo;
     }
 
@@ -277,7 +277,7 @@ public class ArbolBinario<T> {
      *
      * @param izquierdo
      */
-    public void setIzquierdo(ArbolBinario<T> izquierdo) {
+    public void setIzquierdo(ANodoArbol<T> izquierdo) {
         this.izquierdo = izquierdo;
     }
 
@@ -285,7 +285,7 @@ public class ArbolBinario<T> {
      *
      * @return
      */
-    public ArbolBinario<T> getDerecho() {
+    public ANodoArbol<T> getDerecho() {
         return derecho;
     }
 
@@ -293,7 +293,7 @@ public class ArbolBinario<T> {
      *
      * @param derecho
      */
-    public void setDerecho(ArbolBinario<T> derecho) {
+    public void setDerecho(ANodoArbol<T> derecho) {
         this.derecho = derecho;
     }
 
